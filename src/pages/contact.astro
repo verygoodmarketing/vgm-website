@@ -1,0 +1,16 @@
+---
+import { getEntry } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+
+const page = await getEntry('pages', 'contact');
+const { Content } = await page.render();
+---
+
+<PageLayout title={page.data.title} description={page.data.description}>
+  <Content />
+
+  <div class="mt-4 text-sm text-gray-600">
+    Last updated: {page.data.updatedDate.toLocaleDateString()}
+    {page.data.metadata && <p>Author: {page.data.metadata.author}</p>}
+  </div>
+</PageLayout>
