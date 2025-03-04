@@ -1,12 +1,17 @@
 ---
 import { getEntry } from 'astro:content';
-import PageLayout from '../layouts/PageLayout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
 
 const page = await getEntry('pages', 'services');
+
+if (!page) {
+  throw new Error('Page not found');
+}
+
 const { Content } = await page.render();
 ---
 
-<PageLayout title={page.data.title} description={page.data.description}>
+<MainLayout title={page.data.title} description={page.data.description} logoText="VeryGood">
   <Content />
 
   {
@@ -26,4 +31,4 @@ const { Content } = await page.render();
     Last updated: {page.data.updatedDate.toLocaleDateString()}
     {page.data.metadata && <p>Author: {page.data.metadata.author}</p>}
   </div>
-</PageLayout>
+</MainLayout>

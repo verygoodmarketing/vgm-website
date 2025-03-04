@@ -1,10 +1,53 @@
 ---
-import '../styles/global.css';
+import MainLayout from '../layouts/MainLayout.astro';
+import { getEntry } from 'astro:content';
 
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+const page = await getEntry('pages', 'home'); // Fetch the markdown content
+
+if (!page) {
+  throw new Error('Page not found');
+}
+
+const { Content } = await page.render(); // Render the markdown content
 ---
 
-<Layout>
-  <Welcome />
-</Layout>
+<MainLayout
+  title="Welcome to VeryGood - Home"
+  description="VeryGood is a leading provider of web development and design services."
+>
+  <h1>Welcome to VeryGood</h1>
+
+  <section class="my-8">
+    <h2>What We Do</h2>
+    <p>
+      At VeryGood, we specialize in creating beautiful, functional websites and applications that
+      help businesses achieve their goals. Our team of experts combines technical skill with
+      creative vision to deliver solutions that stand out in today's competitive digital landscape.
+    </p>
+  </section>
+
+  <section class="my-8">
+    <h2>Our Services</h2>
+    <ul>
+      <li>Web Development</li>
+      <li>UI/UX Design</li>
+      <li>Mobile App Development</li>
+      <li>E-commerce Solutions</li>
+      <li>Digital Marketing</li>
+    </ul>
+  </section>
+
+  <section class="my-8">
+    <h2>Ready to Get Started?</h2>
+    <p>
+      Contact us today to discuss your project needs and see how we can help bring your vision to
+      life.
+    </p>
+    <a
+      href="/contact"
+      class="mt-4 inline-block rounded-md bg-blue-600 px-6 py-3 text-white transition duration-300 hover:bg-blue-700"
+    >
+      Contact Us
+    </a>
+  </section>
+</MainLayout>
