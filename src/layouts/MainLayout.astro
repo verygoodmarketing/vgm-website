@@ -3,12 +3,40 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
+// Define the complete SEO interface
 interface Props {
+  // Required properties
   title: string;
   description: string;
+
+  // Optional properties
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'profile' | 'book' | 'music' | 'video';
+  twitterCard?: 'summary' | 'summary_large_image' | 'app' | 'player';
+  metaRobots?: string;
+  keywords?: string | string[];
+  author?: string;
 }
 
-const { title, description } = Astro.props;
+// Destructure props with defaults
+const {
+  title = 'Very Good Mixtape',
+  description = 'A website created with Astro',
+  canonicalUrl,
+  ogImage = '/images/default-og-image.jpg',
+  ogType = 'website',
+  twitterCard = 'summary_large_image',
+  metaRobots = 'index, follow',
+  keywords = [],
+  author = 'Very Good Mixtape Team',
+} = Astro.props;
+
+// Generate current URL for canonical and og:url when not specified
+const currentUrl = canonicalUrl || Astro.url.href;
+
+// Convert keywords array to string if necessary
+const keywordsString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 ---
 
 <!doctype html>
@@ -17,8 +45,31 @@ const { title, description } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Basic SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywordsString && <meta name="keywords" content={keywordsString} />}
+    {author && <meta name="author" content={author} />}
+
+    <!-- Robots directives -->
+    <meta name="robots" content={metaRobots} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={currentUrl} />
+
+    <!-- Open Graph metadata -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:type" content={ogType} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.url).href} />}
+
+    <!-- Twitter Card metadata -->
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.url).href} />}
   </head>
 
   <body class="flex min-h-screen flex-col bg-white">

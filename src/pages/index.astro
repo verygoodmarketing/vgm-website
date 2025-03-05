@@ -9,11 +9,31 @@ if (!page) {
 }
 
 const { Content } = await page.render(); // Render the markdown content
+
+// Extract all SEO properties from the content entry
+const {
+  title,
+  description,
+  canonicalUrl,
+  ogImage,
+  ogType,
+  twitterCard,
+  metaRobots,
+  keywords,
+  author,
+} = page.data;
 ---
 
 <MainLayout
-  title="Welcome to VeryGood - Home"
-  description="VeryGood is a leading provider of web development and design services."
+  {title}
+  {description}
+  {canonicalUrl}
+  {ogImage}
+  {ogType}
+  {twitterCard}
+  {metaRobots}
+  {keywords}
+  {author}
 >
   <h1>Welcome to VeryGood</h1>
 

@@ -1,6 +1,13 @@
 ---
 title: 'About Us'
-description: 'Learn more about our company and mission'
+description: 'Learn about our company history, values, and team'
+canonicalUrl: 'https://verygood.mixtape/about'
+ogImage: '/images/about-team.jpg'
+ogType: 'article'
+twitterCard: 'summary_large_image'
+metaRobots: 'index, follow'
+keywords: ['about us', 'company history', 'team', 'values', 'mission']
+author: 'Content Team'
 updatedDate: 2024-03-04
 metadata:
   author: 'Content Team'

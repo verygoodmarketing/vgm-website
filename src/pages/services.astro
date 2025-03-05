@@ -9,17 +9,43 @@ if (!page) {
 }
 
 const { Content } = await page.render();
+
+// Extract all SEO properties from the content entry
+const {
+  title,
+  description,
+  canonicalUrl,
+  ogImage,
+  ogType,
+  twitterCard,
+  metaRobots,
+  keywords,
+  author,
+  features,
+  updatedDate,
+  metadata,
+} = page.data;
 ---
 
-<MainLayout title={page.data.title} description={page.data.description} logoText="VeryGood">
+<MainLayout
+  {title}
+  {description}
+  {canonicalUrl}
+  {ogImage}
+  {ogType}
+  {twitterCard}
+  {metaRobots}
+  {keywords}
+  {author}
+>
   <Content />
 
   {
-    page.data.features && (
+    features && (
       <div class="mt-8">
         <h2 class="mb-4 text-2xl font-bold">Our Features</h2>
         <ul class="list-disc space-y-2 pl-6">
-          {page.data.features.map((feature: string) => (
+          {features.map((feature: string) => (
             <li class="text-gray-700">{feature}</li>
           ))}
         </ul>
@@ -28,7 +54,7 @@ const { Content } = await page.render();
   }
 
   <div class="mt-4 text-sm text-gray-600">
-    Last updated: {page.data.updatedDate.toLocaleDateString()}
-    {page.data.metadata && <p>Author: {page.data.metadata.author}</p>}
+    Last updated: {updatedDate.toLocaleDateString()}
+    {metadata && <p>Author: {metadata.author}</p>}
   </div>
 </MainLayout>
