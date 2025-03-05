@@ -1,8 +1,9 @@
 ---
 // Fetch the site configuration
-import { siteConfigPromise } from '../lib/siteConfig';
+import { Image } from 'astro:assets';
 import MenuToggle from './ui/MenuToggle';
 
+import { siteConfigPromise } from '../lib/siteConfig';
 const siteConfig = await siteConfigPromise;
 
 const navItems = [
@@ -20,14 +21,25 @@ const navItems = [
         href="/"
         class="text-xl font-bold text-gray-800 transition duration-300 hover:text-blue-600"
       >
-        {siteConfig?.siteName}
+        {
+          siteConfig?.logo ? (
+            <Image
+              src={siteConfig.logo}
+              alt={siteConfig?.siteName || 'Logo'}
+              width={80}
+              height={32}
+            />
+          ) : (
+            <span class="text-xl font-bold">{siteConfig?.siteName || 'Logo'}</span>
+          )
+        }
       </a>
 
       <!-- Mobile Menu Toggle (only visible on mobile) -->
       <div class="sm:hidden">
         <MenuToggle
           items={navItems}
-          logo="/favicon.svg"
+          logo={siteConfig?.logo}
           logoAlt={siteConfig?.siteName || 'Logo'}
           client:only="react"
         />

@@ -34,6 +34,7 @@ const pagesCollection = defineCollection({
     companyAddress: z.string().optional(),
     companyPhone: z.string().optional(),
     companyEmail: z.string().optional(),
+    logo: z.string().optional(),
 
     // Social Media
     social: z

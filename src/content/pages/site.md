@@ -14,6 +14,7 @@ companyName: 'Very Good Marketing Co, LLC'
 companyAddress: '123 Main Street, Suite 100, Anytown, USA'
 companyPhone: '(555) 123-4567'
 companyEmail: 'info@verygoodmarketing.com'
+logo: '/src/assets/service-provider-logo.png'
 
 # Social Media
 social:
