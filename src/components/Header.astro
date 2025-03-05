@@ -1,6 +1,8 @@
 ---
 // Fetch the site configuration
 import { siteConfigPromise } from '../lib/siteConfig';
+import MenuToggle from './ui/MenuToggle';
+
 const siteConfig = await siteConfigPromise;
 
 const navItems = [
@@ -13,12 +15,27 @@ const navItems = [
 <header class="border-b border-gray-100 px-4 py-4 sm:px-6 lg:px-8">
   <div class="mx-auto flex max-w-7xl flex-col items-center justify-between sm:flex-row">
     <!-- Logo -->
-    <a href="/" class="text-xl font-bold text-gray-800 transition duration-300 hover:text-blue-600">
-      {siteConfig?.siteName}
-    </a>
+    <div class="flex w-full items-center justify-between sm:w-auto">
+      <a
+        href="/"
+        class="text-xl font-bold text-gray-800 transition duration-300 hover:text-blue-600"
+      >
+        {siteConfig?.siteName}
+      </a>
 
-    <!-- Navigation -->
-    <nav class="mt-4 sm:mt-0">
+      <!-- Mobile Menu Toggle (only visible on mobile) -->
+      <div class="sm:hidden">
+        <MenuToggle
+          items={navItems}
+          logo="/favicon.svg"
+          logoAlt={siteConfig?.siteName || 'Logo'}
+          client:only="react"
+        />
+      </div>
+    </div>
+
+    <!-- Desktop Navigation (hidden on mobile) -->
+    <nav class="mt-4 hidden sm:mt-0 sm:block">
       <ul class="flex space-x-1 sm:space-x-8">
         {
           navItems.map((item) => (
