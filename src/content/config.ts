@@ -26,6 +26,41 @@ const pagesCollection = defineCollection({
         showInNav: z.boolean().default(true),
       })
       .optional(),
+
+    // Global Settings
+    siteName: z.string().optional(),
+    siteUrl: z.string().optional(),
+    companyName: z.string().optional(),
+    companyAddress: z.string().optional(),
+    companyPhone: z.string().optional(),
+    companyEmail: z.string().optional(),
+
+    // Social Media
+    social: z
+      .object({
+        twitter: z.string().optional(),
+        facebook: z.string().optional(),
+        instagram: z.string().optional(),
+        linkedin: z.string().optional(),
+      })
+      .optional(),
+
+    // Business Hours
+    businessHours: z
+      .object({
+        weekdays: z.string().optional(),
+        weekends: z.string().optional(),
+      })
+      .optional(),
+
+    // Footer Information
+    footer: z
+      .object({
+        copyright: z.string().optional(),
+        privacyPolicyUrl: z.string().optional(),
+        termsOfServiceUrl: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

@@ -2,6 +2,10 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { getEntry } from 'astro:content';
 
+// Fetch the site configuration
+import { siteConfigPromise } from '../lib/siteConfig';
+const siteConfig = await siteConfigPromise;
+
 const page = await getEntry('pages', 'home'); // Fetch the markdown content
 
 if (!page) {
@@ -35,14 +39,15 @@ const {
   {keywords}
   {author}
 >
-  <h1>Welcome to VeryGood</h1>
+  <h1>Welcome to {siteConfig?.siteName}</h1>
 
   <section class="my-8">
     <h2>What We Do</h2>
     <p>
-      At VeryGood, we specialize in creating beautiful, functional websites and applications that
-      help businesses achieve their goals. Our team of experts combines technical skill with
-      creative vision to deliver solutions that stand out in today's competitive digital landscape.
+      At {siteConfig?.siteName}, we specialize in creating beautiful, functional websites and
+      applications that help businesses achieve their goals. Our team of experts combines technical
+      skill with creative vision to deliver solutions that stand out in today's competitive digital
+      landscape.
     </p>
   </section>
 

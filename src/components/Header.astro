@@ -1,4 +1,8 @@
 ---
+// Fetch the site configuration
+import { siteConfigPromise } from '../lib/siteConfig';
+const siteConfig = await siteConfigPromise;
+
 const navItems = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
@@ -10,7 +14,7 @@ const navItems = [
   <div class="mx-auto flex max-w-7xl flex-col items-center justify-between sm:flex-row">
     <!-- Logo -->
     <a href="/" class="text-xl font-bold text-gray-800 transition duration-300 hover:text-blue-600">
-      VeryGood
+      {siteConfig?.siteName}
     </a>
 
     <!-- Navigation -->

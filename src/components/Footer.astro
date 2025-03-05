@@ -1,4 +1,8 @@
 ---
+// Fetch the site configuration
+import { siteConfigPromise } from '../lib/siteConfig';
+const siteConfig = await siteConfigPromise;
+
 const navItems = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
@@ -15,7 +19,7 @@ const currentYear = new Date().getFullYear();
         href="/"
         class="mb-4 text-xl font-bold text-gray-800 transition duration-300 hover:text-blue-600 md:mb-0"
       >
-        VeryGood
+        {siteConfig?.siteName}
       </a>
 
       <!-- Navigation -->
@@ -39,7 +43,7 @@ const currentYear = new Date().getFullYear();
 
     <!-- Copyright -->
     <div class="mt-8 text-center text-sm text-gray-500">
-      <p>&copy; {currentYear} VeryGood. All rights reserved.</p>
+      <p>&copy; {currentYear} {siteConfig?.companyName}. All rights reserved.</p>
     </div>
   </div>
 </footer>
