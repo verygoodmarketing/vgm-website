@@ -8,7 +8,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,astro,css,md,json}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,astro,css,md,json}\"",
+    "lint": "prettier --check \"**/*.{js,jsx,ts,tsx,astro,css,md,json}\"",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.1",
