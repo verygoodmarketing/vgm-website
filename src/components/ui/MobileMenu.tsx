@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { Button } from './button';
 
 export interface MenuItem {
   href: string;
@@ -13,6 +14,7 @@ interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   buttonPosition: { x: number; y: number };
+  showConsultButton?: boolean;
 }
 
 const MobileMenu = ({
@@ -22,6 +24,7 @@ const MobileMenu = ({
   isOpen,
   onClose,
   buttonPosition,
+  showConsultButton = false,
 }: MobileMenuProps) => {
   const [mounted, setMounted] = useState(false);
   const [animationState, setAnimationState] = useState<'closed' | 'opening' | 'open' | 'closing'>(
@@ -146,6 +149,17 @@ const MobileMenu = ({
                 </a>
               </li>
             ))}
+
+            {/* Free Consultation Button */}
+            {showConsultButton && (
+              <li className="mt-6">
+                <Button variant="amber" size="lg">
+                  <a href="/contact" onClick={onClose}>
+                    Free Consultation
+                  </a>
+                </Button>
+              </li>
+            )}
           </ul>
         </nav>
 

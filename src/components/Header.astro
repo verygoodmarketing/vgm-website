@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import MenuToggle from './ui/MenuToggle';
 
 import { siteConfigPromise } from '../lib/siteConfig';
+import { Button } from './ui/button';
 const siteConfig = await siteConfigPromise;
 
 const navItems = [
@@ -14,9 +15,9 @@ const navItems = [
 ---
 
 <header class="border-b border-gray-100 px-4 py-4 sm:px-6 lg:px-8">
-  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between sm:flex-row">
+  <div class="mx-auto flex max-w-7xl items-center justify-between">
     <!-- Logo -->
-    <div class="flex w-full items-center justify-between sm:w-auto">
+    <div class="flex items-center">
       <a
         href="/"
         class="text-xl font-bold text-gray-800 transition duration-300 hover:text-blue-600"
@@ -34,34 +35,42 @@ const navItems = [
           )
         }
       </a>
-
-      <!-- Mobile Menu Toggle (only visible on mobile) -->
-      <div class="sm:hidden">
-        <MenuToggle
-          items={navItems}
-          logo={siteConfig?.logo}
-          logoAlt={siteConfig?.siteName || 'Logo'}
-          client:only="react"
-        />
-      </div>
     </div>
 
-    <!-- Desktop Navigation (hidden on mobile) -->
-    <nav class="mt-4 hidden sm:mt-0 sm:block">
-      <ul class="flex space-x-1 sm:space-x-8">
-        {
-          navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="rounded-md px-3 py-2 text-gray-700 transition duration-300 hover:bg-gray-100 hover:text-blue-600"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <!-- Right Side: Navigation and Consultation Button (hidden on mobile) -->
+    <div class="hidden items-center md:flex">
+      <!-- Desktop Navigation -->
+      <nav>
+        <ul class="mr-8 flex space-x-8">
+          {
+            navItems.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="rounded-md px-3 py-2 text-gray-700 transition duration-300 hover:bg-gray-100 hover:text-blue-600"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Free Consultation Button -->
+      <Button variant="blue">
+        <a href="/contact"> Free Consultation </a>
+      </Button>
+    </div>
+
+    <!-- Mobile Menu Toggle (only visible on mobile) -->
+    <div class="md:hidden">
+      <MenuToggle
+        items={navItems}
+        logo={siteConfig?.logo}
+        logoAlt={siteConfig?.siteName || 'Logo'}
+        client:only="react"
+      />
+    </div>
   </div>
 </header>

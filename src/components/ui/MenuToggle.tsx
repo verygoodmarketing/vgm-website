@@ -90,6 +90,7 @@ const MenuToggle = ({ items, logo, logoAlt }: MenuToggleProps) => {
           isOpen={isMenuOpen}
           onClose={() => setIsMenuOpen(false)}
           buttonPosition={buttonPosition}
+          showConsultButton={true}
         />
       )}
     </>

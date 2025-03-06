@@ -76,10 +76,8 @@ const keywordsString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 
   <body class="flex min-h-screen flex-col bg-white">
     <Header />
-    <main class="mx-auto w-full max-w-4xl flex-grow px-4 py-8">
-      <article class="prose prose-slate max-w-none">
-        <slot />
-      </article>
+    <main class="flex-grow">
+      <slot />
     </main>
     <Footer />
   </body>
