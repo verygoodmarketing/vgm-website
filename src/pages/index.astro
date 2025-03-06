@@ -2,7 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { getEntry } from 'astro:content';
 import { Image } from 'astro:assets';
-
+import { Button } from '../components/ui/button';
 // Fetch the site configuration
 import { siteConfigPromise } from '../lib/siteConfig';
 const siteConfig = await siteConfigPromise;
@@ -42,28 +42,24 @@ const {
 >
   <!-- Hero Section -->
   <section class="bg-blue-600 py-16 text-white">
-    <div class="container mx-auto px-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col items-start lg:flex-row lg:items-center lg:justify-between">
         <div class="mb-8 lg:mb-0 lg:w-1/2">
           <h1 class="mb-4 text-4xl font-bold">
             Marketing with
-            <span class="text-yellow-300">Complete Transparency</span>
+            <span class="text-amber-400">Complete Transparency</span>
           </h1>
           <p class="mb-6 text-lg">
             Helping small businesses advertise cost-effectively without the usual marketing smoke
             and mirrors.
           </p>
           <div class="flex flex-wrap gap-4">
-            <a
-              href="/services"
-              class="rounded bg-yellow-300 px-6 py-3 font-medium text-blue-800 hover:bg-yellow-400"
-              >Explore Our Services</a
-            >
-            <a
-              href="/contact"
-              class="rounded border border-white px-6 py-3 font-medium text-white hover:bg-white hover:text-blue-600"
-              >Free Consultation</a
-            >
+            <Button variant="amber" size="lg">
+              <a href="/services">Explore Our Services</a>
+            </Button>
+            <Button variant="outlineDark" size="lg">
+              <a href="/contact">Free Consultation</a>
+            </Button>
           </div>
         </div>
 
@@ -93,8 +89,8 @@ const {
   </section>
 
   <!-- About Section -->
-  <section class="py-16">
-    <div class="container mx-auto px-4 text-center">
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
       <h2 class="mb-8 text-3xl font-bold text-gray-800">About Very Good Marketing</h2>
       <p class="mx-auto mb-12 max-w-3xl text-gray-600">
         Founded in 2022, we're on a mission to bring transparency and effectiveness to small
@@ -201,7 +197,7 @@ const {
 
   <!-- Services Section -->
   <section class="bg-gray-50 py-16">
-    <div class="container mx-auto px-4 text-center">
+    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
       <h2 class="mb-4 text-3xl font-bold text-gray-800">Our Services</h2>
       <p class="mx-auto mb-12 max-w-2xl text-gray-600">
         We offer transparent, effective marketing services designed specifically for small
@@ -304,8 +300,8 @@ const {
   </section>
 
   <!-- Testimonials Section -->
-  <section class="py-16">
-    <div class="container mx-auto px-4 text-center">
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
       <h2 class="mb-8 text-3xl font-bold text-gray-800">What Our Clients Say</h2>
       <p class="mx-auto mb-12 max-w-2xl text-gray-600">
         Don't just take our word for it. Here's what our clients have to say about working with us.
@@ -371,7 +367,7 @@ const {
 
   <!-- CTA Section -->
   <section class="bg-blue-600 py-16 text-white">
-    <div class="container mx-auto px-4 text-center">
+    <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
       <h2 class="mb-6 text-3xl font-bold">
         Ready to grow your business with transparent marketing?
       </h2>

@@ -153,7 +153,7 @@ const MobileMenu = ({
             {/* Free Consultation Button */}
             {showConsultButton && (
               <li className="mt-6">
-                <Button variant="amber" size="lg">
+                <Button variant="blue" size="lg">
                   <a href="/contact" onClick={onClose}>
                     Free Consultation
                   </a>
