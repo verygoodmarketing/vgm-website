@@ -1,0 +1,58 @@
+---
+import { Card, CardHeader, CardContent, CardFooter, CardTitle } from '@/ui/card';
+import Icon from '@/ui/Icon.astro';
+import { ArrowRight, Check } from 'lucide-react';
+const { service } = Astro.props;
+---
+
+<Card className="overflow-hidden">
+  <CardHeader>
+    <div class="mb-4">
+      <Icon name={service.icon} size="17" color="#2563eb" class="h-10 w-10" client="load" />
+    </div>
+    <CardTitle className="text-2xl text-gray-900">{service.title}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p class="mb-6 text-gray-800">{service.description}</p>
+
+    <h4 class="mb-3 text-lg font-semibold text-gray-800">Features:</h4>
+    <ul class="mb-6 space-y-2">
+      {
+        service.features.map((feature: string, index: number) => (
+          <li class="flex items-start">
+            <Check className="h-5 w-5 text-blue-600 mr-2 mt-0.5" />
+            <span class="text-gray-800">{feature}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="border-t pt-6">
+      <h4 class="mb-3 text-lg font-semibold text-gray-800">Pricing:</h4>
+      {
+        service.pricing.custom ? (
+          <p class="text-gray-800">{service.pricing.custom}</p>
+        ) : (
+          <div>
+            {service.pricing.upfront > 0 && (
+              <p class="text-gray-800">${service.pricing.upfront} upfront</p>
+            )}
+            {service.pricing.recurring > 0 && (
+              <p class="text-gray-800">
+                ${service.pricing.recurring}/{service.pricing.recurringPeriod} recurring
+              </p>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </CardContent>
+  <CardFooter>
+    <a
+      href={`/contact?service=${service.id}`}
+      class="inline-flex items-center font-medium text-blue-700 transition-colors hover:text-blue-800"
+    >
+      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+    </a>
+  </CardFooter>
+</Card>

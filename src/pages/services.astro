@@ -1,6 +1,10 @@
 ---
 import { getEntry } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
+import PageHeader from '@/components/shared/PageHeader.astro';
+import CTA from '@/components/shared/CTA.astro';
+import ServicesGrid from '@/components/services/ServicesGrid.astro';
+import PricingSection from '@/components/services/PricingSection.astro';
 
 const page = await getEntry('pages', 'services');
 
@@ -9,6 +13,61 @@ if (!page) {
 }
 
 const { Content } = await page.render();
+
+const services = [
+  {
+    id: 'website-creation',
+    title: 'Website Creation',
+    description: 'Professional, responsive websites designed specifically for small businesses.',
+    icon: 'laptop',
+    features: [
+      '5-7 pages with responsive design',
+      'Hosting, domain, and maintenance included',
+      'Regular updates and support',
+      'Annual design refresh',
+    ],
+    pricing: {
+      upfront: 799,
+      recurring: 159,
+      recurringPeriod: 'month',
+    },
+  },
+  {
+    id: 'google-ads',
+    title: 'Google Search Ads Management',
+    description:
+      'Targeted search advertising to reach customers actively looking for your services.',
+    icon: 'search',
+    features: [
+      'Keyword research and optimization',
+      'Ad copy creation and testing',
+      'Performance tracking and reporting',
+      'Monthly strategy adjustments',
+    ],
+    pricing: {
+      upfront: 99,
+      recurring: 299,
+      recurringPeriod: 'month',
+    },
+  },
+  {
+    id: 'social-media',
+    title: 'Social Media Advertising',
+    description: 'Engage with your audience where they spend their time online.',
+    icon: 'share',
+    features: [
+      'Platform selection and strategy',
+      'Creative development',
+      'Audience targeting',
+      'Performance optimization',
+    ],
+    pricing: {
+      upfront: 99,
+      recurring: 599,
+      recurringPeriod: 'month',
+    },
+  },
+];
 
 // Extract all SEO properties from the content entry
 const {
@@ -38,27 +97,33 @@ const {
   {keywords}
   {author}
 >
-  <section class="py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <Content />
+  <PageHeader
+    title="Our Services"
+    description="Transparent, effective marketing services designed specifically for small businesses."
+  />
 
-      {
-        features && (
-          <div class="mt-8">
-            <h2 class="mb-4 text-2xl font-bold">Our Features</h2>
-            <ul class="list-disc space-y-2 pl-6">
-              {features.map((feature: string) => (
-                <li class="text-gray-700">{feature}</li>
-              ))}
-            </ul>
-          </div>
-        )
-      }
+  <ServicesGrid {services} />
 
-      <div class="mt-4 text-sm text-gray-600">
-        Last updated: {updatedDate.toLocaleDateString()}
-        {metadata && <p>Author: {metadata.author}</p>}
-      </div>
-    </div>
-  </section>
+  <PricingSection
+    {services}
+    serviceId="website-creation"
+    features={[
+      '5-7 responsive pages',
+      'Hosting and domain included',
+      'Regular maintenance and updates',
+      'Content management system',
+      'Mobile optimization',
+      'Basic SEO setup',
+      'Contact form integration',
+      'Google Analytics setup',
+      'Annual design refresh',
+    ]}
+  />
+
+  <CTA
+    title="Ready to get started?"
+    description="Contact us today to discuss how our services can help your business grow."
+    buttonText="Contact Us"
+    buttonLink="/contact"
+  />
 </MainLayout>
