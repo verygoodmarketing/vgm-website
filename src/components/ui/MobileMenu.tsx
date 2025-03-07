@@ -1,198 +1,252 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from './button';
+import { Mountain, X } from 'lucide-react';
 
 export interface MenuItem {
   href: string;
   label: string;
 }
 
+export interface NavigationItem {
+  href: string;
+  name: string;
+}
+
 interface MobileMenuProps {
-  items: MenuItem[];
+  // Support both MenuItem[] and NavigationItem[] formats
+  items?: MenuItem[];
+  navigation?: NavigationItem[];
   logo?: string;
   logoAlt?: string;
-  isOpen: boolean;
-  onClose: () => void;
-  buttonPosition: { x: number; y: number };
   showConsultButton?: boolean;
 }
 
 const MobileMenu = ({
   items,
+  navigation,
   logo = '/favicon.svg',
-  logoAlt = 'Logo',
-  isOpen,
-  onClose,
-  buttonPosition,
-  showConsultButton = false,
+  logoAlt = 'Very Good Marketing',
+  showConsultButton = true,
 }: MobileMenuProps) => {
-  const [mounted, setMounted] = useState(false);
-  const [animationState, setAnimationState] = useState<'closed' | 'opening' | 'open' | 'closing'>(
-    'closed'
+  // Convert navigation items to menu items if provided
+  const menuItems =
+    items || navigation?.map((item) => ({ href: item.href, label: item.name })) || [];
+
+  // State for menu visibility and animation
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [animationState, setAnimationState] = useState<'idle' | 'opening' | 'open' | 'closing'>(
+    'idle'
   );
+  const [mounted, setMounted] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
+  const animationTimeoutRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLElement | null>(null);
 
-  // Calculate x and y position for the animation origin
-  const originX = buttonPosition.x;
-  const originY = buttonPosition.y;
+  // Get current page path for active highlighting
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
 
-  // Handle mounting for client-side only rendering
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
+  };
+
+  // Set up client-side rendering
   useEffect(() => {
     containerRef.current = document.body;
     setMounted(true);
     return () => setMounted(false);
   }, []);
 
-  // Handle animation states and body scroll locking
-  useEffect(() => {
-    if (!mounted) return;
-
-    if (isOpen && animationState === 'closed') {
-      setAnimationState('opening');
-      document.body.style.overflow = 'hidden';
-
-      // After opening animation completes
-      setTimeout(() => {
-        setAnimationState('open');
-      }, 500); // Match this with the CSS transition duration
-    } else if (!isOpen && (animationState === 'open' || animationState === 'opening')) {
-      setAnimationState('closing');
-
-      // After closing animation completes
-      setTimeout(() => {
-        setAnimationState('closed');
-        document.body.style.overflow = '';
-      }, 500); // Match this with the CSS transition duration
+  // Clear animation timeouts to prevent race conditions
+  const clearAnimationTimeout = () => {
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+      animationTimeoutRef.current = null;
     }
-  }, [isOpen, animationState, mounted]);
+  };
 
-  // Handle clicks outside the menu content
+  const openMenu = () => {
+    clearAnimationTimeout();
+    setMenuVisible(true);
+
+    requestAnimationFrame(() => {
+      setAnimationState('opening');
+
+      animationTimeoutRef.current = setTimeout(() => {
+        setAnimationState('open');
+      }, 500);
+    });
+
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeMenu = () => {
+    clearAnimationTimeout();
+    setAnimationState('closing');
+
+    animationTimeoutRef.current = setTimeout(() => {
+      setMenuVisible(false);
+      setAnimationState('idle');
+      document.body.style.overflow = '';
+    }, 500);
+  };
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && menuVisible) {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscKey);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscKey);
+      clearAnimationTimeout();
+      document.body.style.overflow = '';
+    };
+  }, [menuVisible]);
+
+  // Handle backdrop clicks
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === backdropRef.current) {
-      onClose();
+      closeMenu();
     }
   };
 
-  // Don't render anything on the server or if not mounted
-  if (!mounted || !containerRef.current) return null;
+  // Get animation origin point
+  const getAnimationOrigin = () => {
+    if (!menuButtonRef.current) return 'top right';
 
-  // Don't render if the menu is fully closed
-  if (animationState === 'closed' && !isOpen) return null;
+    const rect = menuButtonRef.current.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
 
-  // Calculate scale values for the animation
-  const getScaleStyles = () => {
-    if (typeof window === 'undefined') return {}; // Safety check for SSR
-
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    // Calculate the scale needed to cover the entire screen
-    // Get the largest possible distance from the origin point to any corner
-    const maxDistance = Math.max(
-      Math.hypot(viewportWidth - originX, viewportHeight - originY),
-      Math.hypot(originX, viewportHeight - originY),
-      Math.hypot(viewportWidth - originX, originY),
-      Math.hypot(originX, originY)
-    );
-
-    // We double the max distance to ensure full coverage and convert to a scale factor
-    // Initial size is 50px diameter (25px radius), so we need to scale accordingly
-    const scale = (maxDistance * 2.2) / 25;
-
-    // State-dependent transform
-    const transform =
-      animationState === 'opening' || animationState === 'open' ? `scale(${scale})` : 'scale(0)';
-
-    return {
-      left: `${originX - 25}px`, // Center the 50px circle on the origin
-      top: `${originY - 25}px`,
-      transformOrigin: 'center',
-      transform,
-    };
+    return `${x}px ${y}px`;
   };
 
-  const menuContent = (
-    <div
-      ref={backdropRef}
-      onClick={handleBackdropClick}
-      className="fixed inset-0 z-50 flex items-center justify-center"
-    >
-      {/* Animated circle background */}
-      <div
-        className="fixed h-[50px] w-[50px] rounded-full bg-blue-600 transition-transform duration-500 ease-out"
-        style={getScaleStyles()}
-      />
-
-      {/* Menu content (only shown when fully open) */}
-      <div
-        className={`relative z-10 flex h-full w-full flex-col items-center justify-between p-8 text-white transition-opacity duration-300 ${
-          animationState === 'open' ? 'opacity-100' : 'pointer-events-none opacity-0'
-        }`}
+  // Don't render the full menu until it's mounted
+  if (!mounted)
+    return (
+      <button
+        ref={menuButtonRef}
+        type="button"
+        onClick={openMenu}
+        className="z-50 inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset md:hidden"
+        aria-expanded={menuVisible}
+        aria-label="Open main menu"
       >
-        {/* Logo */}
-        <div className="mt-8 w-full text-center">
-          <img src={logo} alt={logoAlt} className="inline-block h-12" />
-        </div>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <line x1="4" y1="8" x2="20" y2="8"></line>
+          <line x1="4" y1="16" x2="20" y2="16"></line>
+        </svg>
+      </button>
+    );
 
-        {/* Menu items */}
-        <nav className="flex flex-col items-center">
-          <ul className="flex flex-col items-center space-y-6 text-2xl font-medium">
-            {items.map((item, index) => (
-              <li key={index}>
+  return (
+    <div className="md:hidden">
+      <button
+        ref={menuButtonRef}
+        type="button"
+        onClick={openMenu}
+        className="z-50 inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset"
+        aria-expanded={menuVisible}
+        aria-label="Open main menu"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <line x1="4" y1="8" x2="20" y2="8"></line>
+          <line x1="4" y1="16" x2="20" y2="16"></line>
+        </svg>
+      </button>
+
+      {menuVisible &&
+        createPortal(
+          <div
+            ref={backdropRef}
+            onClick={handleBackdropClick}
+            className={`fixed inset-0 z-50 flex items-center justify-center bg-white ${
+              animationState === 'opening'
+                ? 'menu-opening'
+                : animationState === 'closing'
+                  ? 'menu-closing'
+                  : animationState === 'open'
+                    ? 'menu-open'
+                    : ''
+            }`}
+            style={{
+              ['--origin' as any]: getAnimationOrigin(),
+            }}
+          >
+            {/* Close button */}
+            <button
+              type="button"
+              className="absolute top-6 right-6 rounded-full p-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset"
+              onClick={closeMenu}
+              aria-label="Close menu"
+            >
+              <X className="h-6 w-6" aria-hidden="true" />
+            </button>
+
+            {/* Logo at top */}
+            <div className="absolute top-6 left-6 flex items-center">
+              <Mountain className="mr-2 h-6 w-6 text-blue-600" />
+              <span className="text-xl font-bold">{logoAlt}</span>
+            </div>
+
+            {/* Centered navigation */}
+            <nav className="flex flex-col items-center justify-center space-y-6 px-4 text-center">
+              {menuItems.map((item) => (
                 <a
+                  key={item.href}
                   href={item.href}
-                  className="block px-4 py-2 transition-colors hover:text-blue-200"
-                  onClick={onClose}
+                  onClick={closeMenu}
+                  className={`text-2xl font-medium transition-colors duration-300 ${
+                    isActive(item.href)
+                      ? 'border-b-2 border-blue-600 text-blue-600'
+                      : 'text-gray-800 hover:text-blue-600'
+                  }`}
                 >
                   {item.label}
                 </a>
-              </li>
-            ))}
-
-            {/* Free Consultation Button */}
-            {showConsultButton && (
-              <li className="mt-6">
-                <Button variant="blue" size="lg">
-                  <a href="/contact" onClick={onClose}>
-                    Free Consultation
-                  </a>
-                </Button>
-              </li>
-            )}
-          </ul>
-        </nav>
-
-        {/* Close button */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-8 right-8 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-          aria-label="Close menu"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        {/* Empty bottom space to balance the layout */}
-        <div className="h-12" />
-      </div>
+              ))}
+              {showConsultButton && (
+                <div className="mt-4 pt-8">
+                  <Button asChild variant="blue" size="lg">
+                    <a href="/contact" onClick={closeMenu}>
+                      Free Consultation
+                    </a>
+                  </Button>
+                </div>
+              )}
+            </nav>
+          </div>,
+          document.body
+        )}
     </div>
   );
-
-  return createPortal(menuContent, containerRef.current);
 };
 
 export default MobileMenu;

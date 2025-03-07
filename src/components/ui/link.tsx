@@ -1,38 +1,12 @@
 import React from 'react';
-import { Button } from './button';
-import { cva, type VariantProps } from 'class-variance-authority';
-
-const buttonVariants = cva('', {
-  variants: {
-    variant: {
-      default: '',
-      destructive: '',
-      outline: '',
-      secondary: '',
-      ghost: '',
-      link: '',
-      amber: '',
-      blue: '',
-      outlineDark: '',
-      white: '',
-    },
-    size: {
-      default: '',
-      sm: '',
-      lg: '',
-      icon: '',
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-    size: 'default',
-  },
-});
+import { Button, buttonVariants } from './button';
+import type { VariantProps } from 'class-variance-authority';
 
 interface LinkProps
   extends Omit<React.ComponentPropsWithoutRef<'a'>, 'as' | 'color'>,
     VariantProps<typeof buttonVariants> {
   children: React.ReactNode;
+  href: string;
 }
 
 const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
@@ -49,4 +23,4 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
 
 Link.displayName = 'Link';
 
-export { Link };
+export { Link, buttonVariants };

@@ -20,13 +20,12 @@ interface Props {
   color?: string;
   size?: string | number;
   class?: string;
-  client?: string;
+  client?: 'load' | 'visible' | 'idle';
 }
 
 const { name, color = 'currentColor', size = 24, class: className = '', client } = Astro.props;
 
 // Convert size to a format that Lucide components can use
-// If size is a string with 'px', remove it; if it's a string with a number, convert to number
 const normalizedSize =
   typeof size === 'string'
     ? size.endsWith('px')
@@ -37,7 +36,7 @@ const normalizedSize =
 // Normalize name to lowercase for consistent matching
 const iconName = name.toLowerCase();
 
-// Try to load custom SVG icons if no match with Lucide
+// Try to load custom SVG icons if not matched with Lucide
 let svgContent = '';
 if (
   ![
@@ -207,9 +206,6 @@ if (
   )
 }
 
-{/* Custom SVG icons */}
-{svgContent && <Fragment set:html={svgContent} />}
-
 {/* Eye Icon */}
 {
   iconName === 'eye' && client === 'load' && (
@@ -315,3 +311,6 @@ if (
     <TrendingUp className={className} size={normalizedSize} color={color} />
   )
 }
+
+{/* Custom SVG icons */}
+{svgContent && <Fragment set:html={svgContent} />}
