@@ -1,0 +1,105 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { Mail, Phone } from 'lucide-react';
+// Fetch the site configuration
+import { siteConfigPromise } from '@/lib/siteConfig';
+const siteConfig = await siteConfigPromise;
+
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/services', label: 'Services' },
+  { href: '/about', label: 'About Us' },
+  { href: '/resources', label: 'Resources' },
+  { href: '/articles', label: 'Articles' },
+  { href: '/contact', label: 'Contact' },
+];
+const currentYear = new Date().getFullYear();
+
+// Define social links for easier management
+const socialLinks = [
+  { name: 'facebook', href: '#', label: 'Facebook' },
+  { name: 'twitter', href: '#', label: 'Twitter' },
+  { name: 'instagram', href: '#', label: 'Instagram' },
+  { name: 'linkedin', href: '#', label: 'LinkedIn' },
+];
+---
+
+<footer class="bg-[#111827] py-16 text-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+      <!-- Company Info Column -->
+      <div>
+        <h3 class="mb-6 text-xl font-bold">Very Good Marketing Co. LLC</h3>
+        <p class="mb-6 text-gray-300">
+          Helping new and small service-based businesses advertise cost-effectively with maximum
+          transparency.
+        </p>
+        <div class="flex space-x-4">
+          {
+            socialLinks.map((link) => (
+              <a href={link.href} class="text-white hover:text-gray-300" aria-label={link.label}>
+                <span class="sr-only">{link.label}</span>
+                <Icon name={link.name as any} color="currentColor" class="h-6 w-6" />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Quick Links Column -->
+      <div>
+        <h3 class="mb-6 text-xl font-bold">Quick Links</h3>
+        <ul class="space-y-3">
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={item.href} class="text-gray-300 hover:text-white">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contact Info Column -->
+      <div>
+        <h3 class="mb-6 text-xl font-bold">Contact Us</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-3">
+            <Mail name="email" color="currentColor" className="h-5 w-5 flex-shrink-0" />
+            <a href="mailto:info@verygoodmarketing.com" class="text-gray-300 hover:text-white"
+              >info@verygoodmarketing.com</a
+            >
+          </li>
+          <li class="flex items-center gap-3">
+            <Phone name="phone" color="currentColor" className="h-5 w-5 flex-shrink-0" />
+            <span class="text-gray-300">(555) 123-4567</span>
+          </li>
+          <li class="mt-6">
+            <h4 class="mb-2 font-semibold">Office Hours</h4>
+            <p class="text-gray-300">Monday - Friday: 9am - 5pm</p>
+            <p class="text-gray-300">Saturday - Sunday: Closed</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright and Legal Links -->
+    <div class="mt-16 border-t border-gray-700 pt-8">
+      <div class="flex flex-col justify-between space-y-4 md:flex-row md:space-y-0">
+        <p class="text-sm text-gray-400">
+          &copy; {currentYear} Very Good Marketing Co. LLC. All rights reserved.
+        </p>
+        <div class="space-x-6">
+          <a href="/privacy-policy" class="text-sm text-gray-400 hover:text-gray-300"
+            >Privacy Policy</a
+          >
+          <a href="/terms-of-service" class="text-sm text-gray-400 hover:text-gray-300"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

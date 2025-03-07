@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import { Link } from '@/ui/link';
+import MobileMenu from './MobileMenu';
+
+// Fetch the site configuration
+import { siteConfigPromise } from '@/lib/siteConfig';
+const siteConfig = await siteConfigPromise;
+
+// Get current URL path for active link highlighting
+const { pathname } = Astro.url;
+
+const isActive = (href: string) => {
+  if (href === '/') {
+    return pathname === href;
+  }
+  return pathname.startsWith(href);
+};
+
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Services', href: '/services' },
+  { name: 'Resources', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
+];
+---
+
+<header class="sticky top-0 z-40 w-full bg-white shadow-md">
+  <div class="container mx-auto px-4">
+    <div class="flex h-20 items-center justify-between">
+      <div class="flex-shrink-0">
+        <a href="/" class="flex items-center">
+          <span class="text-2xl font-bold text-blue-600">Very Good Marketing</span>
+        </a>
+      </div>
+
+      <!-- Desktop navigation -->
+      <nav class="hidden space-x-8 md:flex">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class={`text-base font-medium transition-colors duration-300 ${
+                isActive(item.href)
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
+              {item.name}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="hidden md:flex">
+        <Link href="/contact" variant="blue" client:load> Free Consultation </Link>
+      </div>
+
+      <!-- Mobile menu -->
+      <MobileMenu navigation={navItems} client:load />
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Add any CSS animations for the menu here */
+  :global(.menu-opening) {
+    animation: circleReveal 0.5s ease-out forwards;
+  }
+
+  :global(.menu-closing) {
+    animation: circleHide 0.5s ease-in forwards;
+  }
+
+  @keyframes circleReveal {
+    from {
+      clip-path: circle(0% at var(--origin, top right));
+    }
+    to {
+      clip-path: circle(150% at var(--origin, top right));
+    }
+  }
+
+  @keyframes circleHide {
+    from {
+      clip-path: circle(150% at var(--origin, top right));
+    }
+    to {
+      clip-path: circle(0% at var(--origin, top right));
+    }
+  }
+</style>

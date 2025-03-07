@@ -20,6 +20,7 @@ const buttonVariants = cva(
         amber: 'bg-amber-500 text-white hover:bg-amber-600',
         blue: 'bg-blue-600 text-white hover:bg-blue-700',
         outlineDark: 'border border-white hover:bg-white hover:text-blue-600',
+        white: 'border-white bg-white text-blue-700 hover:bg-gray-100',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

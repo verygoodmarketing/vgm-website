@@ -1,0 +1,29 @@
+---
+// Icon component that imports SVG icons and allows color customization
+interface Props {
+  name: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'email' | 'phone';
+  color?: string;
+  size?: string;
+  class?: string;
+}
+
+const { name, color = 'currentColor', size = '24px', class: className = '' } = Astro.props;
+
+// Import the SVG contents dynamically based on the name
+let iconContent;
+try {
+  iconContent = await import(`../../assets/icons/${name}.svg?raw`);
+} catch (e) {
+  console.error(`Icon ${name} not found`);
+  iconContent = { default: '<svg></svg>' };
+}
+
+// Parse the SVG to modify its attributes
+let svgContent = iconContent.default;
+svgContent = svgContent.replace(/fill="[^"]*"/, `fill="${color}"`);
+svgContent = svgContent.replace(/width="[^"]*"/, `width="${size}"`);
+svgContent = svgContent.replace(/height="[^"]*"/, `height="${size}"`);
+svgContent = svgContent.replace(/<svg/, `<svg class="${className}"`);
+---
+
+<Fragment set:html={svgContent} />

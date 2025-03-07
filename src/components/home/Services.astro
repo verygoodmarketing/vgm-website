@@ -1,0 +1,79 @@
+---
+import { ArrowRight, Laptop, Search, Share } from 'lucide-react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui/card';
+import { Link } from '@/ui/link';
+
+const services = [
+  {
+    title: 'Website Creation',
+    description: 'Professional, responsive websites designed specifically for small businesses.',
+    icon: 'Laptop',
+    link: '/services#website-creation',
+  },
+  {
+    title: 'Google Search Ads',
+    description:
+      'Targeted search advertising to reach customers actively looking for your services.',
+    icon: 'Search',
+    link: '/services#google-ads',
+  },
+  {
+    title: 'Social Media Advertising',
+    description: 'Engage with your audience where they spend their time online.',
+    icon: 'Share',
+    link: '/services#social-media',
+  },
+];
+---
+
+<section class="bg-gray-50 py-16 md:py-24">
+  <div class="container mx-auto px-4">
+    <div class="mb-16 text-center">
+      <h2 class="section-title text-gray-900">Our Services</h2>
+      <p class="section-description text-gray-800">
+        We offer transparent, effective marketing services designed specifically for small
+        businesses.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      {
+        services.map((service, index) => (
+          <Card key={index} className="bg-white" client:load>
+            <CardHeader>
+              <div class="mb-4">
+                {service.icon === 'Laptop' && (
+                  <Laptop className="h-10 w-10 text-blue-600" client:load />
+                )}
+                {service.icon === 'Search' && (
+                  <Search className="h-10 w-10 text-blue-600" client:load />
+                )}
+                {service.icon === 'Share' && (
+                  <Share className="h-10 w-10 text-blue-600" client:load />
+                )}
+              </div>
+              <CardTitle className="text-xl text-gray-900" client:load>
+                {service.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-gray-800">{service.description}</p>
+            </CardContent>
+            <CardFooter>
+              <a
+                href={service.link}
+                class="inline-flex items-center font-medium text-blue-700 transition-colors hover:text-blue-800"
+              >
+                Learn More <ArrowRight className="ml-2 h-4 w-4" client:load />
+              </a>
+            </CardFooter>
+          </Card>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <Link href="/services" variant="blue"> View All Services </Link>
+    </div>
+  </div>
+</section>

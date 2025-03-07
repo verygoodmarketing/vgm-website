@@ -1,0 +1,66 @@
+---
+import { Card, CardContent } from '@/ui/card';
+import { Image } from 'astro:assets';
+
+const testimonials = [
+  {
+    quote:
+      'Very Good Marketing helped us establish our online presence with a beautiful website and effective Google Ads campaign. Their transparent approach was refreshing.',
+    author: 'Jane Doe',
+    company: 'Local Service Business',
+    image: '/src/assets/images/placeholder.svg',
+  },
+  {
+    quote:
+      "As a small business owner, I appreciate how they explained everything in plain English and didn't try to upsell me on services I didn't need.",
+    author: 'John Smith',
+    company: 'Professional Services',
+    image: '/src/assets/images/placeholder.svg',
+  },
+  {
+    quote:
+      "Their educational approach empowered us to make informed decisions about our marketing strategy. We've seen real results without breaking the bank.",
+    author: 'Sarah Johnson',
+    company: 'Small Retail Shop',
+    image: '/src/assets/images/placeholder.svg',
+  },
+];
+---
+
+<section class="bg-white py-16 md:py-24">
+  <div class="container mx-auto px-4">
+    <div class="mb-16 text-center">
+      <h2 class="section-title text-gray-900">What Our Clients Say</h2>
+      <p class="section-description text-gray-700">
+        Don't just take our word for it. Here's what our clients have to say about working with us.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      {
+        testimonials.map((testimonial, index) => (
+          <Card key={index} className="bg-gray-50">
+            <CardContent className="p-8">
+              <div class="mb-6 flex items-center">
+                <div class="mr-4">
+                  <Image
+                    class="rounded-full"
+                    src={testimonial.image}
+                    alt={testimonial.author}
+                    width={60}
+                    height={60}
+                  />
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">{testimonial.author}</h3>
+                  <p class="text-sm text-gray-700">{testimonial.company}</p>
+                </div>
+              </div>
+              <p class="text-gray-800 italic">"{testimonial.quote}"</p>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>

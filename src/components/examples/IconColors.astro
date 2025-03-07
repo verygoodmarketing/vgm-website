@@ -1,0 +1,53 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+---
+
+<div class="rounded-lg bg-white p-8 shadow-lg">
+  <h2 class="mb-6 text-2xl font-bold">Icon Color Examples</h2>
+
+  <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+    <div class="flex flex-col items-center">
+      <Icon name="facebook" color="#1877F2" class="mb-2 h-10 w-10" />
+      <span class="text-sm">Facebook Blue</span>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <Icon name="twitter" color="#1DA1F2" class="mb-2 h-10 w-10" />
+      <span class="text-sm">Twitter Blue</span>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <Icon name="instagram" color="#E4405F" class="mb-2 h-10 w-10" />
+      <span class="text-sm">Instagram Pink</span>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <Icon name="linkedin" color="#0A66C2" class="mb-2 h-10 w-10" />
+      <span class="text-sm">LinkedIn Blue</span>
+    </div>
+  </div>
+
+  <h3 class="mt-8 mb-4 text-xl font-bold">Contextual Colors</h3>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-4">
+    <div class="flex flex-col items-center rounded-lg bg-blue-600 p-4 text-white">
+      <Icon name="email" color="white" class="mb-2 h-8 w-8" />
+      <span class="text-sm">White on Blue</span>
+    </div>
+
+    <div class="flex flex-col items-center rounded-lg bg-emerald-600 p-4 text-white">
+      <Icon name="phone" color="white" class="mb-2 h-8 w-8" />
+      <span class="text-sm">White on Green</span>
+    </div>
+
+    <div class="flex flex-col items-center rounded-lg bg-gray-800 p-4 text-white">
+      <Icon name="facebook" class="mb-2 h-8 w-8" />
+      <span class="text-sm">currentColor (White)</span>
+    </div>
+
+    <div class="flex flex-col items-center rounded-lg bg-amber-400 p-4 text-gray-900">
+      <Icon name="twitter" class="mb-2 h-8 w-8" />
+      <span class="text-sm">currentColor (Dark)</span>
+    </div>
+  </div>
+</div>
