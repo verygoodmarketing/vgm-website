@@ -4,7 +4,7 @@ description: 'Stay ahead of the competition with these up-to-date SEO strategies
 publishDate: 2024-01-20
 author: 'SEO Team'
 image: '/src/assets/images/article-seo.jpg'
-featured: false
+featured: true
 categories: ['SEO', 'Digital']
 tags: ['Keywords', 'Content', 'Technical SEO', 'Local SEO']
 ---

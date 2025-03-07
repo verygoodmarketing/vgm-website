@@ -14,9 +14,3 @@ metadata:
   author: 'Content Team'
   showInNav: true
 ---
-
-# Marketing Resources & Insights
-
-Welcome to our resource center. Here you'll find helpful guides, articles, and insights to help you navigate the world of marketing and grow your business effectively.
-
-Browse our featured content below or explore our [complete article library](/articles) for more in-depth resources.
