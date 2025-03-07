@@ -1,6 +1,6 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
-import { Mail, Phone } from 'lucide-react';
+
 // Fetch the site configuration
 import { siteConfigPromise } from '@/lib/siteConfig';
 const siteConfig = await siteConfigPromise;
@@ -39,7 +39,7 @@ const socialLinks = [
             socialLinks.map((link) => (
               <a href={link.href} class="text-white hover:text-gray-300" aria-label={link.label}>
                 <span class="sr-only">{link.label}</span>
-                <Icon name={link.name as any} color="currentColor" class="h-6 w-6" />
+                <Icon name={link.name} color="currentColor" class="h-6 w-6" />
               </a>
             ))
           }
@@ -67,13 +67,13 @@ const socialLinks = [
         <h3 class="mb-6 text-xl font-bold">Contact Us</h3>
         <ul class="space-y-3">
           <li class="flex items-center gap-3">
-            <Mail name="email" color="currentColor" className="h-5 w-5 flex-shrink-0" />
+            <Icon name="email" color="currentColor" class="h-5 w-5 flex-shrink-0" client="load" />
             <a href="mailto:info@verygoodmarketing.com" class="text-gray-300 hover:text-white"
               >info@verygoodmarketing.com</a
             >
           </li>
           <li class="flex items-center gap-3">
-            <Phone name="phone" color="currentColor" className="h-5 w-5 flex-shrink-0" />
+            <Icon name="phone" color="currentColor" class="h-5 w-5 flex-shrink-0" client="load" />
             <span class="text-gray-300">(555) 123-4567</span>
           </li>
           <li class="mt-6">

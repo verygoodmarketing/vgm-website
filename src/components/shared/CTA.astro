@@ -1,15 +1,35 @@
 ---
 import { Link } from '../ui/link';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  icon?: string;
+}
+
+const {
+  title = 'Ready to grow your business with transparent marketing?',
+  description = 'Schedule a free consultation to learn how we can help grow your business fairly.',
+  buttonText = 'Get Free Consultation',
+  buttonLink = '/contact',
+  icon = 'arrow-right',
+} = Astro.props;
 ---
 
 <section class="bg-blue-600 py-16 text-white md:py-24">
   <div class="container mx-auto px-4 text-center">
     <h2 class="mb-6 text-3xl font-bold md:text-4xl">
-      Ready to grow your business with transparent marketing?
+      {title}
     </h2>
     <p class="mx-auto mb-8 max-w-3xl text-xl text-white drop-shadow-sm">
-      Schedule a free consultation to learn how we can help grow your business fairly.
+      {description}
     </p>
-    <Link href="/contact" variant="white" size="lg"> Get Free Consultation </Link>
+    <Link href={buttonLink} variant="white" size="lg" client:load>
+      {buttonText}
+      {icon && <Icon name={icon} class="ml-2 h-5 w-5" client="load" />}
+    </Link>
   </div>
 </section>

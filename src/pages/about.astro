@@ -1,6 +1,12 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
 import { getEntry } from 'astro:content';
+
+import CTA from '@/components/shared/CTA.astro';
+import PageHeader from '@/components/shared/PageHeader.astro';
+import Mission from '@/components/about/Mission.astro';
+import Values from '@/components/about/Values.astro';
+import Founders from '@/components/about/Founders.astro';
 
 const page = await getEntry('pages', 'about');
 
@@ -9,6 +15,33 @@ if (!page) {
 }
 
 const { Content } = await page.render();
+
+const values = [
+  {
+    title: 'Transparency',
+    description:
+      'We believe in complete honesty about what marketing can and cannot do for your business.',
+    icon: 'eye',
+  },
+  {
+    title: 'Education',
+    description:
+      'We empower our clients with knowledge so they can make informed decisions about their marketing.',
+    icon: 'book-open',
+  },
+  {
+    title: 'Affordability',
+    description:
+      'We provide cost-effective solutions tailored specifically for small business budgets.',
+    icon: 'piggy-bank',
+  },
+  {
+    title: 'Results',
+    description:
+      'We focus on delivering measurable outcomes that directly impact your business growth.',
+    icon: 'trending-up',
+  },
+];
 
 // Extract all SEO properties from the content entry
 const {
@@ -37,13 +70,21 @@ const {
   {keywords}
   {author}
 >
-  <section class="py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <Content />
-      <div class="mt-4 text-sm text-gray-600">
-        Last updated: {updatedDate.toLocaleDateString()}
-        {metadata && <p>Author: {metadata.author}</p>}
-      </div>
-    </div>
-  </section>
+  <PageHeader
+    title="About Us"
+    description="Founded in 2024 to bring transparency to small business marketing."
+  />
+
+  <Mission />
+
+  <Values />
+
+  <Founders />
+
+  <CTA
+    title="Want to learn more about our approach?"
+    description="Schedule a call with our team to discuss how we can help your business."
+    buttonText="Contact Us"
+    buttonLink="/contact"
+  />
 </MainLayout>

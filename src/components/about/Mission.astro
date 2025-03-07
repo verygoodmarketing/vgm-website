@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  imgSrc?: string;
+  imgAlt?: string;
+}
+
+const { imgSrc = '/src/assets/images/placeholder.svg', imgAlt = 'Our mission illustration' } =
+  Astro.props;
+---
+
+<section class="bg-white py-12 md:py-20">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="mb-6 text-3xl font-bold">Our Mission</h2>
+        <p class="mb-6 text-lg">
+          Very Good Marketing Co. LLC was founded in 2024 with a clear mission: to help small
+          businesses market themselves effectively without being swindled.
+        </p>
+        <p class="mb-6 text-lg">
+          After seeing too many small businesses waste their limited resources on ineffective
+          marketing tactics or overpriced services, our founders decided to create a company that
+          prioritizes transparency, education, and results.
+        </p>
+        <p class="text-lg">
+          We believe that every business, regardless of size, deserves access to effective marketing
+          strategies and honest advice about what will truly help them grow.
+        </p>
+      </div>
+      <div class="relative h-[400px] overflow-hidden rounded-lg shadow-xl">
+        <Image
+          src={imgSrc}
+          alt={imgAlt}
+          width={600}
+          height={600}
+          class="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>

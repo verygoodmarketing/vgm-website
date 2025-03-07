@@ -1,29 +1,317 @@
 ---
+// Import specific Lucide icons we want to support
+import {
+  Mail,
+  Phone,
+  Search,
+  Laptop,
+  Share,
+  ArrowRight,
+  Eye,
+  BookOpen,
+  Book,
+  PiggyBank,
+  TrendingUp,
+} from 'lucide-react';
+
 // Icon component that imports SVG icons and allows color customization
 interface Props {
-  name: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'email' | 'phone';
+  name: string;
   color?: string;
-  size?: string;
+  size?: string | number;
   class?: string;
+  client?: string;
 }
 
-const { name, color = 'currentColor', size = '24px', class: className = '' } = Astro.props;
+const { name, color = 'currentColor', size = 24, class: className = '', client } = Astro.props;
 
-// Import the SVG contents dynamically based on the name
-let iconContent;
-try {
-  iconContent = await import(`../../assets/icons/${name}.svg?raw`);
-} catch (e) {
-  console.error(`Icon ${name} not found`);
-  iconContent = { default: '<svg></svg>' };
+// Convert size to a format that Lucide components can use
+// If size is a string with 'px', remove it; if it's a string with a number, convert to number
+const normalizedSize =
+  typeof size === 'string'
+    ? size.endsWith('px')
+      ? parseInt(size.replace('px', ''), 10) || 24
+      : size
+    : size;
+
+// Normalize name to lowercase for consistent matching
+const iconName = name.toLowerCase();
+
+// Try to load custom SVG icons if no match with Lucide
+let svgContent = '';
+if (
+  ![
+    'mail',
+    'email',
+    'phone',
+    'search',
+    'laptop',
+    'share',
+    'arrowright',
+    'arrow-right',
+    'eye',
+    'book-open',
+    'book',
+    'bookopen',
+    'piggy-bank',
+    'piggybank',
+    'trending-up',
+    'trendingup',
+  ].includes(iconName)
+) {
+  try {
+    const iconContent = await import(`../../assets/icons/${name}.svg?raw`);
+    svgContent = iconContent.default;
+    svgContent = svgContent.replace(/fill="[^"]*"/, `fill="${color}"`);
+    // For raw SVGs, use the original size format with units if it's a string
+    const sizeWithUnit = typeof size === 'string' ? size : `${size}px`;
+    svgContent = svgContent.replace(/width="[^"]*"/, `width="${sizeWithUnit}"`);
+    svgContent = svgContent.replace(/height="[^"]*"/, `height="${sizeWithUnit}"`);
+    svgContent = svgContent.replace(/<svg/, `<svg class="${className}"`);
+  } catch (e) {
+    console.error(`Icon ${name} not found`);
+    svgContent = '<svg></svg>';
+  }
 }
-
-// Parse the SVG to modify its attributes
-let svgContent = iconContent.default;
-svgContent = svgContent.replace(/fill="[^"]*"/, `fill="${color}"`);
-svgContent = svgContent.replace(/width="[^"]*"/, `width="${size}"`);
-svgContent = svgContent.replace(/height="[^"]*"/, `height="${size}"`);
-svgContent = svgContent.replace(/<svg/, `<svg class="${className}"`);
 ---
 
-<Fragment set:html={svgContent} />
+{/* Mail/Email Icon */}
+{
+  (iconName === 'mail' || iconName === 'email') && client === 'load' && (
+    <Mail className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  (iconName === 'mail' || iconName === 'email') && client === 'visible' && (
+    <Mail className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  (iconName === 'mail' || iconName === 'email') && client === 'idle' && (
+    <Mail className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  (iconName === 'mail' || iconName === 'email') && !client && (
+    <Mail className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Phone Icon */}
+{
+  iconName === 'phone' && client === 'load' && (
+    <Phone className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'phone' && client === 'visible' && (
+    <Phone className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'phone' && client === 'idle' && (
+    <Phone className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'phone' && !client && (
+    <Phone className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Search Icon */}
+{
+  iconName === 'search' && client === 'load' && (
+    <Search className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'search' && client === 'visible' && (
+    <Search className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'search' && client === 'idle' && (
+    <Search className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'search' && !client && (
+    <Search className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Laptop Icon */}
+{
+  iconName === 'laptop' && client === 'load' && (
+    <Laptop className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'laptop' && client === 'visible' && (
+    <Laptop className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'laptop' && client === 'idle' && (
+    <Laptop className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'laptop' && !client && (
+    <Laptop className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Share Icon */}
+{
+  iconName === 'share' && client === 'load' && (
+    <Share className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'share' && client === 'visible' && (
+    <Share className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'share' && client === 'idle' && (
+    <Share className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'share' && !client && (
+    <Share className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Arrow Right Icon */}
+{
+  (iconName === 'arrowright' || iconName === 'arrow-right') && client === 'load' && (
+    <ArrowRight className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  (iconName === 'arrowright' || iconName === 'arrow-right') && client === 'visible' && (
+    <ArrowRight className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  (iconName === 'arrowright' || iconName === 'arrow-right') && client === 'idle' && (
+    <ArrowRight className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  (iconName === 'arrowright' || iconName === 'arrow-right') && !client && (
+    <ArrowRight className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Custom SVG icons */}
+{svgContent && <Fragment set:html={svgContent} />}
+
+{/* Eye Icon */}
+{
+  iconName === 'eye' && client === 'load' && (
+    <Eye className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'eye' && client === 'visible' && (
+    <Eye className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'eye' && client === 'idle' && (
+    <Eye className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{iconName === 'eye' && !client && <Eye className={className} size={normalizedSize} color={color} />}
+
+{/* BookOpen Icon */}
+{
+  (iconName === 'bookopen' || iconName === 'book-open') && client === 'load' && (
+    <BookOpen className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  (iconName === 'bookopen' || iconName === 'book-open') && client === 'visible' && (
+    <BookOpen className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  (iconName === 'bookopen' || iconName === 'book-open') && client === 'idle' && (
+    <BookOpen className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  (iconName === 'bookopen' || iconName === 'book-open') && !client && (
+    <BookOpen className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Book Icon */}
+{
+  iconName === 'book' && client === 'load' && (
+    <Book className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'book' && client === 'visible' && (
+    <Book className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'book' && client === 'idle' && (
+    <Book className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'book' && !client && (
+    <Book className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* PiggyBank Icon */}
+{
+  (iconName === 'piggybank' || iconName === 'piggy-bank') && client === 'load' && (
+    <PiggyBank className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  (iconName === 'piggybank' || iconName === 'piggy-bank') && client === 'visible' && (
+    <PiggyBank className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  (iconName === 'piggybank' || iconName === 'piggy-bank') && client === 'idle' && (
+    <PiggyBank className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  (iconName === 'piggybank' || iconName === 'piggy-bank') && !client && (
+    <PiggyBank className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* TrendingUp Icon */}
+{
+  (iconName === 'trendingup' || iconName === 'trending-up') && client === 'load' && (
+    <TrendingUp className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  (iconName === 'trendingup' || iconName === 'trending-up') && client === 'visible' && (
+    <TrendingUp className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  (iconName === 'trendingup' || iconName === 'trending-up') && client === 'idle' && (
+    <TrendingUp className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  (iconName === 'trendingup' || iconName === 'trending-up') && !client && (
+    <TrendingUp className={className} size={normalizedSize} color={color} />
+  )
+}

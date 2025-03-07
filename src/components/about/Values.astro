@@ -1,0 +1,64 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+import Icon from '@/components/ui/Icon.astro';
+
+interface ValueItem {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface Props {
+  values?: ValueItem[];
+}
+
+const defaultValues = [
+  {
+    title: 'Transparency',
+    description:
+      'We believe in complete honesty about what marketing can and cannot do for your business.',
+    icon: 'eye',
+  },
+  {
+    title: 'Education',
+    description:
+      'We empower our clients with knowledge so they can make informed decisions about their marketing.',
+    icon: 'book',
+  },
+  {
+    title: 'Affordability',
+    description:
+      'We provide cost-effective solutions tailored specifically for small business budgets.',
+    icon: 'piggy-bank',
+  },
+  {
+    title: 'Results',
+    description:
+      'We focus on delivering measurable outcomes that directly impact your business growth.',
+    icon: 'trending-up',
+  },
+];
+
+const { values = defaultValues } = Astro.props;
+---
+
+<section class="bg-gray-50 py-12 md:py-20">
+  <div class="container mx-auto px-4">
+    <h2 class="mb-12 text-center text-3xl font-bold">Our Values</h2>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+      {
+        values.map((value, index) => (
+          <Card className="text-center">
+            <CardContent className="p-8">
+              <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                <Icon name={value.icon} size="17" color="#2563eb" class="h-10 w-10" client="load" />
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-gray-900">{value.title}</h3>
+              <p class="text-gray-700">{value.description}</p>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>

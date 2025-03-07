@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+
+interface FounderItem {
+  name: string;
+  title: string;
+  bio: string;
+  imgSrc: string;
+  imgAlt: string;
+}
+
+interface Props {
+  founders?: FounderItem[];
+}
+
+const defaultFounders = [
+  {
+    name: 'Founder Name',
+    title: 'Co-Founder & CEO',
+    bio: 'With over 10 years of experience in digital marketing, our founder saw the need for a more transparent approach to helping small businesses succeed online.',
+    imgSrc: '/src/assets/images/placeholder.svg',
+    imgAlt: 'Founder 1',
+  },
+  {
+    name: 'Founder Name',
+    title: 'Co-Founder & COO',
+    bio: 'Coming from a background in small business consulting, our co-founder brings practical insights into the real challenges small businesses face with marketing.',
+    imgSrc: '/src/assets/images/placeholder.svg',
+    imgAlt: 'Founder 2',
+  },
+];
+
+const { founders = defaultFounders } = Astro.props;
+---
+
+<section class="bg-white py-12 md:py-20">
+  <div class="container mx-auto px-4">
+    <h2 class="mb-12 text-center text-3xl font-bold">Our Founders</h2>
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
+      {
+        founders.map((founder) => (
+          <div class="overflow-hidden rounded-lg bg-white shadow-lg">
+            <div class="relative h-[300px] overflow-hidden">
+              <div class="h-full w-full">
+                <Image
+                  src={founder.imgSrc}
+                  alt={founder.imgAlt}
+                  width={472}
+                  height={300}
+                  class="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="mb-2 text-xl font-bold">{founder.name}</h3>
+              <p class="mb-4 text-gray-600">{founder.title}</p>
+              <p class="text-gray-700">{founder.bio}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

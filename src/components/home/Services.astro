@@ -1,26 +1,26 @@
 ---
-import { ArrowRight, Laptop, Search, Share } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui/card';
 import { Link } from '@/ui/link';
+import Icon from '@/components/ui/Icon.astro';
 
 const services = [
   {
     title: 'Website Creation',
     description: 'Professional, responsive websites designed specifically for small businesses.',
-    icon: 'Laptop',
+    icon: 'laptop',
     link: '/services#website-creation',
   },
   {
     title: 'Google Search Ads',
     description:
       'Targeted search advertising to reach customers actively looking for your services.',
-    icon: 'Search',
+    icon: 'search',
     link: '/services#google-ads',
   },
   {
     title: 'Social Media Advertising',
     description: 'Engage with your audience where they spend their time online.',
-    icon: 'Share',
+    icon: 'share',
     link: '/services#social-media',
   },
 ];
@@ -42,15 +42,7 @@ const services = [
           <Card key={index} className="bg-white" client:load>
             <CardHeader>
               <div class="mb-4">
-                {service.icon === 'Laptop' && (
-                  <Laptop className="h-10 w-10 text-blue-600" client:load />
-                )}
-                {service.icon === 'Search' && (
-                  <Search className="h-10 w-10 text-blue-600" client:load />
-                )}
-                {service.icon === 'Share' && (
-                  <Share className="h-10 w-10 text-blue-600" client:load />
-                )}
+                <Icon name={service.icon} color="#2563eb" class="h-10 w-10" client="load" />
               </div>
               <CardTitle className="text-xl text-gray-900" client:load>
                 {service.title}
@@ -64,7 +56,7 @@ const services = [
                 href={service.link}
                 class="inline-flex items-center font-medium text-blue-700 transition-colors hover:text-blue-800"
               >
-                Learn More <ArrowRight className="ml-2 h-4 w-4" client:load />
+                Learn More <Icon name="arrowRight" class="ml-2 h-4 w-4" client="load" />
               </a>
             </CardFooter>
           </Card>
@@ -73,7 +65,7 @@ const services = [
     </div>
 
     <div class="mt-12 text-center">
-      <Link href="/services" variant="blue"> View All Services </Link>
+      <Link href="/services" variant="blue" client:load> View All Services </Link>
     </div>
   </div>
 </section>
