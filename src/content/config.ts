@@ -1,5 +1,27 @@
 import { defineCollection, z } from 'astro:content';
 
+const articlesCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.date(),
+    updatedDate: z.date().optional(),
+    author: z.string(),
+    image: z.string().optional(),
+    featured: z.boolean().default(false),
+    categories: z.array(z.string()).optional(),
+    tags: z.array(z.string()).optional(),
+    canonicalUrl: z.string().url().optional(),
+    ogImage: z.string().optional(),
+    ogType: z.enum(['website', 'article', 'profile', 'book', 'music', 'video']).default('article'),
+    twitterCard: z
+      .enum(['summary', 'summary_large_image', 'app', 'player'])
+      .default('summary_large_image'),
+    metaRobots: z.string().default('index, follow'),
+  }),
+});
+
 const pagesCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -67,4 +89,5 @@ const pagesCollection = defineCollection({
 
 export const collections = {
   pages: pagesCollection,
+  articles: articlesCollection,
 };

@@ -1,0 +1,190 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import { Image } from 'astro:assets';
+// Generate paths for all articles
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+// Get article data
+const { article } = Astro.props;
+const { Content } = await article.render();
+
+// Format date
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+}
+
+// Get related articles (same category)
+const allArticles = await getCollection('articles');
+const relatedArticles = allArticles
+  .filter(
+    (a) =>
+      a.slug !== article.slug &&
+      a.data.categories?.some((category) => article.data.categories?.includes(category))
+  )
+  .sort(() => Math.random() - 0.5) // Randomize
+  .slice(0, 3); // Get max 3 related articles
+---
+
+<MainLayout
+  title={article.data.title}
+  description={article.data.description}
+  ogImage={article.data.image}
+  ogType="article"
+  twitterCard="summary_large_image"
+  keywords={article.data.tags}
+  author={article.data.author}
+>
+  <section class="bg-white py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Article Header -->
+      <div class="mx-auto max-w-4xl text-center">
+        {
+          article.data.categories && (
+            <div class="mb-4 flex justify-center gap-2">
+              {article.data.categories.map((category) => (
+                <a
+                  href={`/articles/category/${category.toLowerCase()}`}
+                  class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800 hover:bg-blue-200"
+                >
+                  {category}
+                </a>
+              ))}
+            </div>
+          )
+        }
+
+        <h1 class="mb-4 text-4xl font-bold text-gray-900 sm:text-5xl">{article.data.title}</h1>
+
+        <p class="mb-6 text-xl text-gray-600">{article.data.description}</p>
+
+        <div class="mb-8 flex items-center justify-center text-sm text-gray-500">
+          <span>By {article.data.author}</span>
+          <span class="mx-2">•</span>
+          <time datetime={article.data.publishDate.toISOString()}>
+            {formatDate(article.data.publishDate)}
+          </time>
+          {
+            article.data.updatedDate && (
+              <>
+                <span class="mx-2">•</span>
+                <span>Updated: {formatDate(article.data.updatedDate)}</span>
+              </>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Featured Image -->
+      {
+        article.data.image && (
+          <div class="mb-10 overflow-hidden rounded-lg">
+            <Image
+              src={article.data.image}
+              alt={article.data.title}
+              width={1200}
+              height={630}
+              class="mx-auto h-auto w-full max-w-4xl object-cover"
+            />
+          </div>
+        )
+      }
+
+      <!-- Article Content -->
+      <div class="prose prose-lg prose-blue mx-auto max-w-3xl">
+        <Content />
+      </div>
+
+      <!-- Tags -->
+      {
+        article.data.tags && article.data.tags.length > 0 && (
+          <div class="mx-auto mt-10 max-w-3xl">
+            <div class="flex flex-wrap gap-2">
+              {article.data.tags.map((tag) => (
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700">#{tag}</span>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      <!-- Related Articles -->
+      {
+        relatedArticles.length > 0 && (
+          <div class="mx-auto mt-16 max-w-5xl">
+            <h2 class="mb-8 text-2xl font-bold text-gray-900">Related Articles</h2>
+
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedArticles.map((relatedArticle) => (
+                <div class="overflow-hidden rounded-lg shadow-md transition duration-300 hover:shadow-lg">
+                  <a href={`/articles/${relatedArticle.slug}`} class="block">
+                    <div class="relative h-40 w-full bg-gray-200">
+                      {relatedArticle.data.image ? (
+                        <Image
+                          src={relatedArticle.data.image}
+                          alt={relatedArticle.data.title}
+                          width={1200}
+                          height={630}
+                          class="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div class="flex h-full w-full items-center justify-center bg-blue-50 text-blue-500">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-12 w-12"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="1"
+                              d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <div class="p-4">
+                      <h3 class="mb-2 text-lg font-bold text-gray-900">
+                        {relatedArticle.data.title}
+                      </h3>
+                      <p class="text-sm text-gray-500">
+                        {formatDate(relatedArticle.data.publishDate)}
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      <!-- Call to Action -->
+      <div class="mx-auto mt-16 max-w-3xl rounded-lg bg-blue-50 p-8 text-center">
+        <h2 class="mb-3 text-2xl font-bold text-gray-900">Need Marketing Help?</h2>
+        <p class="mb-6 text-lg text-gray-700">
+          Our team of experts can help you implement these strategies and more.
+        </p>
+        <a
+          href="/contact"
+          class="rounded bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
+        >
+          Get Free Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
