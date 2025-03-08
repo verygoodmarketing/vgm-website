@@ -340,6 +340,7 @@ content:
       - name: 'author'
         label: 'Author'
         type: 'string'
+        
   - name: 'articles'
     label: 'Articles & Resources'
     type: 'file'
@@ -454,10 +455,11 @@ content:
       - name: 'author'
         label: 'Author'
         type: 'string'
+        
   - name: 'site'
     label: 'Site Configuration'
     type: 'file'
-    path: 'src/content/config/site.md'
+    path: 'src/content/pages/site.md'
     fields:
       - name: 'title'
         label: 'Title'
