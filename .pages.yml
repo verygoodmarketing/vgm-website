@@ -23,7 +23,7 @@ content:
           - {
               name: ogImage,
               label: Share Image,
-              type: string,
+              type: image,
               description: 'This is used as the page share image for SEO. If not provided, the default share image from the site configuration will be used.',
             }
           - {
