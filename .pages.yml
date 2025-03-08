@@ -454,3 +454,115 @@ content:
       - name: 'author'
         label: 'Author'
         type: 'string'
+  - name: 'site'
+    label: 'Site Configuration'
+    type: 'file'
+    path: 'src/content/config/site.md'
+    fields:
+      - name: 'title'
+        label: 'Title'
+        type: 'string'
+        required: true
+      
+      - name: 'description'
+        label: 'Description'
+        type: 'text'
+        required: true
+
+      - name: 'updatedDate'
+        label: 'Last Updated Date'
+        type: 'date'
+        required: true
+
+      - name: 'metadata'
+        label: 'Metadata'
+        type: 'object'
+        fields:
+          - name: 'author'
+            label: 'Author'
+            type: 'string'
+          - name: 'showInNav'
+            label: 'Show in Navigation'
+            type: 'boolean'
+
+      # Global Settings
+      - name: 'siteName'
+        label: 'Site Name'
+        type: 'string'
+        required: true
+
+      - name: 'siteUrl'
+        label: 'Site URL'
+        type: 'string'
+        required: true
+
+      - name: 'companyName'
+        label: 'Company Name'
+        type: 'string'
+        required: true
+
+      - name: 'companyAddress'
+        label: 'Company Address'
+        type: 'string'
+
+      - name: 'companyPhone'
+        label: 'Company Phone'
+        type: 'string'
+
+      - name: 'companyEmail'
+        label: 'Company Email'
+        type: 'string'
+
+      - name: 'logo'
+        label: 'Logo'
+        type: 'image'
+
+      # Social Media
+      - name: 'social'
+        label: 'Social Media'
+        type: 'object'
+        fields:
+          - name: 'twitter'
+            label: 'Twitter URL'
+            type: 'string'
+          - name: 'facebook'
+            label: 'Facebook URL'
+            type: 'string'
+          - name: 'instagram'
+            label: 'Instagram URL'
+            type: 'string'
+          - name: 'linkedin'
+            label: 'LinkedIn URL'
+            type: 'string'
+
+      # Business Hours
+      - name: 'businessHours'
+        label: 'Business Hours'
+        type: 'object'
+        fields:
+          - name: 'weekdays'
+            label: 'Weekday Hours'
+            type: 'string'
+          - name: 'weekends'
+            label: 'Weekend Hours'
+            type: 'string'
+
+      # Footer Information
+      - name: 'footer'
+        label: 'Footer'
+        type: 'object'
+        fields:
+          - name: 'copyright'
+            label: 'Copyright Text'
+            type: 'string'
+          - name: 'privacyPolicyUrl'
+            label: 'Privacy Policy URL'
+            type: 'string'
+          - name: 'termsOfServiceUrl'
+            label: 'Terms of Service URL'
+            type: 'string'
+
+      # SEO Fields
+      - name: 'metaRobots'
+        label: 'Meta Robots'
+        type: 'string'
