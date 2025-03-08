@@ -1,3 +1,9 @@
 media:
   input: src/assets
   output: assets
+
+content:
+  - name: 'pages'
+    type: 'file'
+    label: 'Pages'
+    path: 'src/content/pages'
