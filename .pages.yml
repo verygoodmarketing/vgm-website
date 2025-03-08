@@ -12,48 +12,148 @@ content:
         label: 'Title'
         type: 'string'
         required: true
+      
       - name: 'description'
         label: 'Description'
-        type: text
+        type: 'text'
         required: true
-      - name: seo
-        label: SEO Settings
-        type: object
+
+      - name: 'updatedDate'
+        label: 'Last Updated Date'
+        type: 'date'
+        required: true
+
+      - name: 'metadata'
+        label: 'Metadata'
+        type: 'object'
         fields:
-          - {
-              name: ogImage,
-              label: Share Image,
-              type: image,
-              description: 'This is used as the page share image for SEO. If not provided, the default share image from the site configuration will be used.',
-            }
-          - {
-              name: ogType,
-              label: Share Type,
-              type: string,
-              description: 'This is used as the page share type for SEO. If not provided, the default share type from the site configuration will be used.',
-            }
-          - {
-              name: twitterCard,
-              label: Twitter Card,
-              type: string,
-              description: 'This is used as the page twitter card for SEO. If not provided, the default twitter card from the site configuration will be used.',
-            }
-          - {
-              name: description,
-              label: Description,
-              description: 'This is used as the page description for SEO. If not provided, the default description from the site configuration will be used.',
-              type: text,
-            }
-          - {
-              name: keywords,
-              label: Keywords,
-              description: 'This is used as the page keywords for SEO. If not provided, the default keywords from the site configuration will be used.',
-              type: array,
-              required: true,
-            }
-          - {
-              name: author,
-              label: Author,
-              description: 'This is used as the page author for SEO. If not provided, the default author from the site configuration will be used.',
-              type: string,
-            }
+          - name: 'author'
+            label: 'Author'
+            type: 'string'
+          - name: 'showInNav'
+            label: 'Show in Navigation'
+            type: 'boolean'
+
+      - name: 'hero'
+        label: 'Hero Section'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'highlightedText'
+            label: 'Highlighted Text'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+          - name: 'primaryButtonText'
+            label: 'Primary Button Text'
+            type: 'string'
+          - name: 'primaryButtonUrl'
+            label: 'Primary Button URL'
+            type: 'string'
+          - name: 'secondaryButtonText'
+            label: 'Secondary Button Text'
+            type: 'string'
+          - name: 'secondaryButtonUrl'
+            label: 'Secondary Button URL'
+            type: 'string'
+          - name: 'backgroundImage'
+            label: 'Background Image'
+            type: 'image'
+          - name: 'featureCard'
+            label: 'Feature Card'
+            type: 'object'
+            fields:
+              - name: 'title'
+                label: 'Title'
+                type: 'string'
+              - name: 'features'
+                label: 'Features'
+                type: 'object'
+
+      - name: 'about'
+        label: 'About Section'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+          - name: 'mission'
+            label: 'Mission'
+            type: 'text'
+          - name: 'missionImage'
+            label: 'Mission Image'
+            type: 'image'
+          - name: 'values'
+            label: 'Values'
+            type: 'object'
+
+      - name: 'services'
+        label: 'Services Section'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+          - name: 'servicesList'
+            label: 'Services List'
+            type: 'object'
+
+      - name: 'testimonials'
+        label: 'Testimonials Section'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+          - name: 'testimonialsList'
+            label: 'Testimonials List'
+            type: 'object'
+
+      - name: 'cta'
+        label: 'Call to Action Section'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+          - name: 'buttonText'
+            label: 'Button Text'
+            type: 'string'
+          - name: 'buttonUrl'
+            label: 'Button URL'
+            type: 'string'
+
+      # SEO Fields
+      - name: 'ogImage'
+        label: 'OG Image'
+        type: 'image'
+      - name: 'ogType'
+        label: 'OG Type'
+        type: 'string'
+      - name: 'twitterCard'
+        label: 'Twitter Card'
+        type: 'string'
+      - name: 'metaRobots'
+        label: 'Meta Robots'
+        type: 'string'
+      - name: 'keywords'
+        label: 'Keywords'
+        type: 'object'
+      - name: 'author'
+        label: 'Author'
+        type: 'string'
