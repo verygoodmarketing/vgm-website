@@ -3,7 +3,13 @@ media:
   output: assets
 
 content:
-  - name: 'pages'
+  - name: 'home'
+    label: 'Home'
     type: 'file'
-    label: 'Pages'
-    path: 'src/content/pages'
+    path: 'src/content/pages/home.md'
+    format: 'md'
+    fields:
+      - name: 'title'
+        label: 'Title'
+        type: 'text'
+        required: true
