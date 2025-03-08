@@ -49,9 +49,9 @@ const {
 
   <About content={page.data} />
 
-  <Services content={page.data} />
+  <Services content={page.data as any} />
 
-  <Testimonials content={page.data} />
+  <Testimonials content={page.data as any} />
 
   <CTA content={page.data} />
 </MainLayout>
