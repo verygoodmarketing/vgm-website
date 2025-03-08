@@ -45,12 +45,7 @@ const services = servicesList.map((service) => ({
           <Card key={index} className="bg-white" client:load>
             <CardHeader>
               <div class="mb-4">
-                <Icon
-                  name={service.icon || 'graph'}
-                  color="#2563eb"
-                  class="h-10 w-10"
-                  client:load
-                />
+                <Icon name={service.icon || 'graph'} color="#2563eb" class="h-10 w-10" />
               </div>
               <CardTitle className="text-xl text-gray-900" client:load>
                 {service.title}
@@ -62,7 +57,7 @@ const services = servicesList.map((service) => ({
                 <ul class="mt-4 space-y-2 text-sm text-gray-700">
                   {service.features.map((feature) => (
                     <li class="flex items-center">
-                      <Icon name="check" class="mr-2 h-4 w-4 text-green-600" client:load />
+                      <Icon name="check" class="mr-2 h-4 w-4 text-green-600" />
                       {feature}
                     </li>
                   ))}
@@ -74,7 +69,7 @@ const services = servicesList.map((service) => ({
                 href={service.link}
                 class="inline-flex items-center font-medium text-blue-700 transition-colors hover:text-blue-800"
               >
-                Learn More <Icon name="arrowRight" class="ml-2 h-4 w-4" client:load />
+                Learn More <Icon name="arrowRight" class="ml-2 h-4 w-4" />
               </a>
             </CardFooter>
           </Card>
