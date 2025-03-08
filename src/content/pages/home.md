@@ -28,26 +28,16 @@ hero:
       - 'Specialized in helping small service businesses'
       - 'Educational approach to empower your decisions'
 about:
-  title: 'About Our Company'
-  description: 'We are a forward-thinking company dedicated to delivering exceptional value to our customers. Our team brings years of experience and passion to every project we undertake.'
+  title: 'About Our Very Good Marketing'
+  description: 'Founded in 2022, we're on a mission to bring transparency and effectiveness to small business marketing.'
   mission: 'To provide transparent, effective marketing solutions for small service businesses.'
   missionImage: '/src/assets/images/placeholder.svg'
   values:
-    - title: 'Transparency'
-      description: "We believe in complete honesty with our clients about what works and what doesn't."
-    - title: 'Education'
-      description: 'We empower clients by teaching them about marketing rather than keeping them in the dark.'
-    - title: 'Value'
-      description: 'We focus on delivering real, measurable results that justify your investment.'
-  team:
-    - name: 'Jane Smith'
-      title: 'Founder & CEO'
-      bio: 'With 15 years of experience in digital marketing, Jane founded the company to bring transparency to small business marketing.'
-      image: '/src/assets/images/placeholder.svg'
-    - name: 'John Davis'
-      title: 'Marketing Director'
-      bio: 'John specializes in creating data-driven marketing strategies that deliver measurable results for our clients.'
-      image: '/src/assets/images/placeholder.svg'
+    - title: 'Our Approach'
+      description: 'We believe in clear communication, honest advice, and marketing strategies that actually work for small businesses.'
+    - title: 'Who We Serve'
+      description: 'We specialize in helping new and small service-based businesses that need effective marketing without the big agency price tag.'
+      description: 'We promise complete transparency about what marketing can and cannot do for your business, with no hidden fees or false promises.'
 services:
   title: 'Our Services'
   description: 'We offer a range of marketing services tailored to small businesses needs.'

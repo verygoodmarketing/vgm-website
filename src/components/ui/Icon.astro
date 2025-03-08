@@ -12,6 +12,10 @@ import {
   Book,
   PiggyBank,
   TrendingUp,
+  Check,
+  Code,
+  PenLine,
+  BarChart,
 } from 'lucide-react';
 
 // Icon component that imports SVG icons and allows color customization
@@ -56,6 +60,14 @@ if (
     'piggybank',
     'trending-up',
     'trendingup',
+    'check',
+    'code',
+    'pencil',
+    'graph',
+    'penline',
+    'pen-line',
+    'barchart',
+    'bar-chart',
   ].includes(iconName)
 ) {
   try {
@@ -309,6 +321,100 @@ if (
 {
   (iconName === 'trendingup' || iconName === 'trending-up') && !client && (
     <TrendingUp className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Check Icon */}
+{
+  iconName === 'check' && client === 'load' && (
+    <Check className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'check' && client === 'visible' && (
+    <Check className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'check' && client === 'idle' && (
+    <Check className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'check' && !client && (
+    <Check className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Code Icon */}
+{
+  iconName === 'code' && client === 'load' && (
+    <Code className={className} size={normalizedSize} color={color} client:load />
+  )
+}
+{
+  iconName === 'code' && client === 'visible' && (
+    <Code className={className} size={normalizedSize} color={color} client:visible />
+  )
+}
+{
+  iconName === 'code' && client === 'idle' && (
+    <Code className={className} size={normalizedSize} color={color} client:idle />
+  )
+}
+{
+  iconName === 'code' && !client && (
+    <Code className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Pencil/PenLine Icon */}
+{
+  (iconName === 'pencil' || iconName === 'penline' || iconName === 'pen-line') &&
+    client === 'load' && (
+      <PenLine className={className} size={normalizedSize} color={color} client:load />
+    )
+}
+{
+  (iconName === 'pencil' || iconName === 'penline' || iconName === 'pen-line') &&
+    client === 'visible' && (
+      <PenLine className={className} size={normalizedSize} color={color} client:visible />
+    )
+}
+{
+  (iconName === 'pencil' || iconName === 'penline' || iconName === 'pen-line') &&
+    client === 'idle' && (
+      <PenLine className={className} size={normalizedSize} color={color} client:idle />
+    )
+}
+{
+  (iconName === 'pencil' || iconName === 'penline' || iconName === 'pen-line') && !client && (
+    <PenLine className={className} size={normalizedSize} color={color} />
+  )
+}
+
+{/* Graph/BarChart Icon */}
+{
+  (iconName === 'graph' || iconName === 'barchart' || iconName === 'bar-chart') &&
+    client === 'load' && (
+      <BarChart className={className} size={normalizedSize} color={color} client:load />
+    )
+}
+{
+  (iconName === 'graph' || iconName === 'barchart' || iconName === 'bar-chart') &&
+    client === 'visible' && (
+      <BarChart className={className} size={normalizedSize} color={color} client:visible />
+    )
+}
+{
+  (iconName === 'graph' || iconName === 'barchart' || iconName === 'bar-chart') &&
+    client === 'idle' && (
+      <BarChart className={className} size={normalizedSize} color={color} client:idle />
+    )
+}
+{
+  (iconName === 'graph' || iconName === 'barchart' || iconName === 'bar-chart') && !client && (
+    <BarChart className={className} size={normalizedSize} color={color} />
   )
 }
 

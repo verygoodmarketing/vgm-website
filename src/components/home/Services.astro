@@ -13,6 +13,7 @@ interface Props {
         description: string;
         icon?: string;
         features?: string[];
+        link?: string;
       }>;
     };
   };
@@ -20,27 +21,7 @@ interface Props {
 
 const { content } = Astro.props;
 const servicesSection = content.services || {};
-const servicesList = servicesSection.servicesList || [
-  {
-    title: 'Website Creation',
-    description: 'Professional, responsive websites designed specifically for small businesses.',
-    icon: 'laptop',
-    link: '/services#website-creation',
-  },
-  {
-    title: 'Google Search Ads',
-    description:
-      'Targeted search advertising to reach customers actively looking for your services.',
-    icon: 'search',
-    link: '/services#google-ads',
-  },
-  {
-    title: 'Social Media Advertising',
-    description: 'Engage with your audience where they spend their time online.',
-    icon: 'share',
-    link: '/services#social-media',
-  },
-];
+const servicesList = servicesSection.servicesList || [];
 
 // Create slugs for service links
 const services = servicesList.map((service) => ({
@@ -71,7 +52,7 @@ const services = servicesList.map((service) => ({
                   name={service.icon || 'graph'}
                   color="#2563eb"
                   class="h-10 w-10"
-                  client="load"
+                  client:load
                 />
               </div>
               <CardTitle className="text-xl text-gray-900" client:load>
@@ -84,7 +65,7 @@ const services = servicesList.map((service) => ({
                 <ul class="mt-4 space-y-2 text-sm text-gray-700">
                   {service.features.slice(0, 2).map((feature) => (
                     <li class="flex items-center">
-                      <Icon name="check" class="mr-2 h-4 w-4 text-green-600" client="load" />
+                      <Icon name="check" class="mr-2 h-4 w-4 text-green-600" client:load />
                       {feature}
                     </li>
                   ))}
@@ -96,7 +77,7 @@ const services = servicesList.map((service) => ({
                 href={service.link}
                 class="inline-flex items-center font-medium text-blue-700 transition-colors hover:text-blue-800"
               >
-                Learn More <Icon name="arrowRight" class="ml-2 h-4 w-4" client="load" />
+                Learn More <Icon name="arrowRight" class="ml-2 h-4 w-4" client:load />
               </a>
             </CardFooter>
           </Card>

@@ -13,43 +13,19 @@ interface Props {
         title: string;
         description: string;
       }>;
-      team?: Array<{
-        name: string;
-        title: string;
-        bio: string;
-        image?: string;
-      }>;
     };
   };
 }
 
 const { content } = Astro.props;
 const about = content.about || {};
-const values = about.values || [
-  {
-    title: 'Transparency',
-    description:
-      "We believe in complete honesty with our clients about what works and what doesn't.",
-  },
-  {
-    title: 'Education',
-    description:
-      'We empower clients by teaching them about marketing rather than keeping them in the dark.',
-  },
-  {
-    title: 'Value',
-    description: 'We focus on delivering real, measurable results that justify your investment.',
-  },
-];
+const values = about.values || [];
 
 // Map value titles to icons
 const valueIcons = {
-  Transparency: ShieldCheck,
+  Transparency: Zap,
   Education: Users,
-  Value: Zap,
-  'Our Approach': Zap,
-  'Who We Serve': Users,
-  'Our Promise': ShieldCheck,
+  Value: ShieldCheck,
 };
 ---
 
@@ -68,7 +44,7 @@ const valueIcons = {
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
       {
         values.map((value) => {
-          const IconComponent = valueIcons[value.title] || Zap;
+          const IconComponent = valueIcons[value.title as keyof typeof valueIcons] || Zap;
           return (
             <div class="rounded-lg bg-gray-50 p-8 text-center shadow-md transition-shadow hover:shadow-lg">
               <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
@@ -81,33 +57,5 @@ const valueIcons = {
         })
       }
     </div>
-
-    {
-      about.team && about.team.length > 0 && (
-        <div class="mt-16">
-          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900">Our Team</h2>
-          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {about.team.map((member) => (
-              <div class="flex flex-col items-center rounded-lg bg-gray-50 p-6 text-center shadow-md">
-                {member.image && (
-                  <div class="mb-4 h-32 w-32 overflow-hidden rounded-full">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      width={128}
-                      height={128}
-                      class="h-full w-full object-cover"
-                    />
-                  </div>
-                )}
-                <h3 class="mb-1 text-xl font-bold text-gray-900">{member.name}</h3>
-                <p class="mb-4 text-blue-600">{member.title}</p>
-                <p class="text-gray-700">{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
-    }
   </div>
 </section>
