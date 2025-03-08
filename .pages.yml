@@ -3,6 +3,118 @@ media:
   output: assets
 
 content:
+  - name: 'articles-content'
+    label: 'Articles'
+    type: 'collection'
+    path: 'src/content/articles'
+    fields:
+      - name: 'title'
+        label: 'Article Title'
+        type: 'string'
+        required: true
+      
+      - name: 'description'
+        label: 'Article Description'
+        type: 'text'
+        required: true
+
+      - name: 'publishDate'
+        label: 'Publish Date'
+        type: 'date'
+        required: true
+
+      - name: 'updatedDate'
+        label: 'Last Updated Date'
+        type: 'date'
+        required: true
+
+      - name: 'author'
+        label: 'Author'
+        type: 'string'
+        required: true
+
+      - name: 'category'
+        label: 'Category'
+        type: 'string'
+        required: true
+
+      - name: 'tags'
+        label: 'Tags'
+        type: 'object'
+
+      - name: 'metadata'
+        label: 'Metadata'
+        type: 'object'
+        fields:
+          - name: 'author'
+            label: 'Author'
+            type: 'string'
+          - name: 'featured'
+            label: 'Featured Article'
+            type: 'boolean'
+          - name: 'showInList'
+            label: 'Show in Article List'
+            type: 'boolean'
+
+      - name: 'featuredImage'
+        label: 'Featured Image'
+        type: 'image'
+
+      - name: 'thumbnail'
+        label: 'Thumbnail Image'
+        type: 'image'
+
+      # Article Content Sections
+      - name: 'excerpt'
+        label: 'Article Excerpt'
+        type: 'text'
+        required: true
+
+      - name: 'content'
+        label: 'Article Content'
+        type: 'text'
+        required: true
+
+      # Related Content
+      - name: 'relatedArticles'
+        label: 'Related Articles'
+        type: 'object'
+
+      # Call to Action
+      - name: 'cta'
+        label: 'Call to Action'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'CTA Title'
+            type: 'string'
+          - name: 'description'
+            label: 'CTA Description'
+            type: 'text'
+          - name: 'buttonText'
+            label: 'Button Text'
+            type: 'string'
+          - name: 'buttonUrl'
+            label: 'Button URL'
+            type: 'string'
+
+      # SEO Fields
+      - name: 'ogImage'
+        label: 'OG Image'
+        type: 'image'
+      - name: 'ogType'
+        label: 'OG Type'
+        type: 'string'
+      - name: 'twitterCard'
+        label: 'Twitter Card'
+        type: 'string'
+      - name: 'metaRobots'
+        label: 'Meta Robots'
+        type: 'string'
+      - name: 'keywords'
+        label: 'Keywords'
+        type: 'object'
+        
   - name: 'home'
     label: 'Home'
     type: 'file'
