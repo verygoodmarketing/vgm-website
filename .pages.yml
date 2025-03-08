@@ -12,17 +12,14 @@ content:
         label: 'Title'
         type: 'string'
         required: true
-      
       - name: 'description'
         label: 'Description'
         type: 'text'
         required: true
-
       - name: 'updatedDate'
         label: 'Last Updated Date'
         type: 'date'
         required: true
-
       - name: 'metadata'
         label: 'Metadata'
         type: 'object'
@@ -33,7 +30,6 @@ content:
           - name: 'showInNav'
             label: 'Show in Navigation'
             type: 'boolean'
-
       - name: 'hero'
         label: 'Hero Section'
         type: 'object'
@@ -72,7 +68,6 @@ content:
               - name: 'features'
                 label: 'Features'
                 type: 'object'
-
       - name: 'about'
         label: 'About Section'
         type: 'object'
@@ -92,7 +87,6 @@ content:
           - name: 'values'
             label: 'Values'
             type: 'object'
-
       - name: 'services'
         label: 'Services Section'
         type: 'object'
@@ -106,7 +100,6 @@ content:
           - name: 'servicesList'
             label: 'Services List'
             type: 'object'
-
       - name: 'testimonials'
         label: 'Testimonials Section'
         type: 'object'
@@ -120,7 +113,6 @@ content:
           - name: 'testimonialsList'
             label: 'Testimonials List'
             type: 'object'
-
       - name: 'cta'
         label: 'Call to Action Section'
         type: 'object'
@@ -138,26 +130,6 @@ content:
             label: 'Button URL'
             type: 'string'
 
-      # SEO Fields
-      - name: 'ogImage'
-        label: 'OG Image'
-        type: 'image'
-      - name: 'ogType'
-        label: 'OG Type'
-        type: 'string'
-      - name: 'twitterCard'
-        label: 'Twitter Card'
-        type: 'string'
-      - name: 'metaRobots'
-        label: 'Meta Robots'
-        type: 'string'
-      - name: 'keywords'
-        label: 'Keywords'
-        type: 'object'
-      - name: 'author'
-        label: 'Author'
-        type: 'string'
-
   - name: 'about'
     label: 'About'
     type: 'file'
@@ -167,21 +139,17 @@ content:
         label: 'Title'
         type: 'string'
         required: true
-      
       - name: 'description'
         label: 'Description'
         type: 'text'
         required: true
-
       - name: 'canonicalUrl'
         label: 'Canonical URL'
         type: 'string'
-
       - name: 'updatedDate'
         label: 'Last Updated Date'
         type: 'date'
         required: true
-
       - name: 'metadata'
         label: 'Metadata'
         type: 'object'
@@ -192,7 +160,6 @@ content:
           - name: 'showInNav'
             label: 'Show in Navigation'
             type: 'boolean'
-
       - name: 'pageHeader'
         label: 'Page Header'
         type: 'object'
@@ -203,7 +170,6 @@ content:
           - name: 'description'
             label: 'Description'
             type: 'text'
-
       - name: 'mission'
         label: 'Mission Section'
         type: 'object'
@@ -217,7 +183,6 @@ content:
           - name: 'content'
             label: 'Content'
             type: 'text'
-
       - name: 'values'
         label: 'Values'
         type: 'object'
@@ -231,7 +196,6 @@ content:
           - name: 'icon'
             label: 'Icon'
             type: 'string'
-
       - name: 'founders'
         label: 'Founders'
         type: 'object'
@@ -252,6 +216,94 @@ content:
             label: 'Image Alt Text'
             type: 'string'
 
+  - name: 'services'
+    label: 'Services'
+    type: 'file'
+    path: 'src/content/pages/services.md'
+    fields:
+      - name: 'title'
+        label: 'Title'
+        type: 'string'
+        required: true
+      - name: 'description'
+        label: 'Description'
+        type: 'text'
+        required: true
+      - name: 'updatedDate'
+        label: 'Last Updated Date'
+        type: 'date'
+        required: true
+      - name: 'canonicalUrl'
+        label: 'Canonical URL'
+        type: 'string'
+      - name: 'features'
+        label: 'Features'
+        type: 'object'
+      - name: 'metadata'
+        label: 'Metadata'
+        type: 'object'
+        fields:
+          - name: 'author'
+            label: 'Author'
+            type: 'string'
+          - name: 'showInNav'
+            label: 'Show in Navigation'
+            type: 'boolean'
+      - name: 'pageHeader'
+        label: 'Page Header'
+        type: 'object'
+        fields:
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+      - name: 'services'
+        label: 'Services'
+        type: 'object'
+        fields:
+          - name: 'id'
+            label: 'Service ID'
+            type: 'string'
+          - name: 'title'
+            label: 'Title'
+            type: 'string'
+          - name: 'description'
+            label: 'Description'
+            type: 'text'
+          - name: 'icon'
+            label: 'Icon'
+            type: 'string'
+          - name: 'features'
+            label: 'Features'
+            type: 'object'
+          - name: 'pricing'
+            label: 'Pricing'
+            type: 'object'
+            fields:
+              - name: 'upfront'
+                label: 'Upfront Cost'
+                type: 'string'
+              - name: 'recurring'
+                label: 'Recurring Cost'
+                type: 'string'
+              - name: 'recurringPeriod'
+                label: 'Recurring Period'
+                type: 'string'
+      - name: 'pricingSection'
+        label: 'Pricing Section'
+        type: 'object'
+        fields:
+          - name: 'serviceId'
+            label: 'Service ID'
+            type: 'string'
+          - name: 'sectionTitle'
+            label: 'Section Title'
+            type: 'string'
+          - name: 'features'
+            label: 'Features'
+            type: 'object'
       - name: 'cta'
         label: 'Call to Action'
         type: 'object'
@@ -265,11 +317,11 @@ content:
           - name: 'buttonText'
             label: 'Button Text'
             type: 'string'
-          - name: 'buttonUrl'
-            label: 'Button URL'
+          - name: 'buttonLink'
+            label: 'Button Link'
             type: 'string'
 
-      # SEO Fields
+      # Common SEO Fields for all pages
       - name: 'ogImage'
         label: 'OG Image'
         type: 'image'
