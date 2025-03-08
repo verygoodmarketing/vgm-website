@@ -22,6 +22,104 @@ const articlesCollection = defineCollection({
   }),
 });
 
+// Define schema for feature card used in hero section
+const featureCardSchema = z.object({
+  title: z.string().optional(),
+  features: z.array(z.string()).optional(),
+});
+
+// Define schema for hero section
+const heroSchema = z.object({
+  title: z.string().optional(),
+  highlightedText: z.string().optional(),
+  description: z.string().optional(),
+  primaryButtonText: z.string().optional(),
+  primaryButtonUrl: z.string().optional(),
+  secondaryButtonText: z.string().optional(),
+  secondaryButtonUrl: z.string().optional(),
+  backgroundImage: z.string().optional(),
+  featureCard: featureCardSchema.optional(),
+});
+
+// Define schema for values
+const valueSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+// Define schema for team members
+const teamMemberSchema = z.object({
+  name: z.string(),
+  title: z.string(),
+  bio: z.string(),
+  image: z.string().optional(),
+});
+
+// Define schema for about section
+const aboutSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  mission: z.string().optional(),
+  missionImage: z.string().optional(),
+  values: z.array(valueSchema).optional(),
+  team: z.array(teamMemberSchema).optional(),
+});
+
+// Define schema for service items
+const serviceSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  icon: z.string().optional(),
+  features: z.array(z.string()).optional(),
+});
+
+// Define schema for services section
+const servicesSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  servicesList: z.array(serviceSchema).optional(),
+});
+
+// Define schema for testimonial items
+const testimonialSchema = z.object({
+  quote: z.string(),
+  author: z.string(),
+  company: z.string().optional(),
+  image: z.string().optional(),
+});
+
+// Define schema for testimonials section
+const testimonialsSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  testimonialsList: z.array(testimonialSchema).optional(),
+});
+
+// Define schema for CTA section
+const ctaSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  buttonText: z.string().optional(),
+  buttonUrl: z.string().optional(),
+});
+
+// Define schema for category
+const categorySchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  icon: z.string().optional(),
+});
+
+// Define schema for articles section
+const articlesSectionSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  featuredTitle: z.string().optional(),
+  featuredDescription: z.string().optional(),
+  categoriesTitle: z.string().optional(),
+  categories: z.array(categorySchema).optional(),
+});
+
 const pagesCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -48,6 +146,14 @@ const pagesCollection = defineCollection({
         showInNav: z.boolean().default(true),
       })
       .optional(),
+
+    // Section content
+    hero: heroSchema.optional(),
+    about: aboutSchema.optional(),
+    services: servicesSchema.optional(),
+    testimonials: testimonialsSchema.optional(),
+    cta: ctaSchema.optional(),
+    articlesSection: articlesSectionSchema.optional(),
 
     // Global Settings
     siteName: z.string().optional(),

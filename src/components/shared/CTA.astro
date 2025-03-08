@@ -3,6 +3,14 @@ import { Link } from '../ui/link';
 import Icon from '@/components/ui/Icon.astro';
 
 interface Props {
+  content?: {
+    cta?: {
+      title?: string;
+      description?: string;
+      buttonText?: string;
+      buttonUrl?: string;
+    };
+  };
   title?: string;
   description?: string;
   buttonText?: string;
@@ -10,25 +18,30 @@ interface Props {
   icon?: string;
 }
 
-const {
-  title = 'Ready to grow your business with transparent marketing?',
-  description = 'Schedule a free consultation to learn how we can help grow your business fairly.',
-  buttonText = 'Get Free Consultation',
-  buttonLink = '/contact',
-  icon = 'arrow-right',
-} = Astro.props;
+const { content, title, description, buttonText, buttonLink, icon = 'arrow-right' } = Astro.props;
+
+// If content is provided, use it; otherwise fall back to direct props
+const ctaSection = content?.cta || {};
+const ctaTitle =
+  ctaSection.title || title || 'Ready to grow your business with transparent marketing?';
+const ctaDescription =
+  ctaSection.description ||
+  description ||
+  'Schedule a free consultation to learn how we can help grow your business fairly.';
+const ctaButtonText = ctaSection.buttonText || buttonText || 'Get Free Consultation';
+const ctaButtonLink = ctaSection.buttonUrl || buttonLink || '/contact';
 ---
 
 <section class="bg-blue-600 py-16 text-white md:py-24">
   <div class="container mx-auto px-4 text-center">
     <h2 class="mb-6 text-3xl font-bold md:text-4xl">
-      {title}
+      {ctaTitle}
     </h2>
     <p class="mx-auto mb-8 max-w-3xl text-xl text-white drop-shadow-sm">
-      {description}
+      {ctaDescription}
     </p>
-    <Link href={buttonLink} variant="white" size="lg" client:load>
-      {buttonText}
+    <Link href={ctaButtonLink} variant="white" size="lg" client:load>
+      {ctaButtonText}
       {icon && <Icon name={icon} class="ml-2 h-5 w-5" client="load" />}
     </Link>
   </div>

@@ -1,62 +1,113 @@
 ---
 import { Zap, Users, ShieldCheck } from 'lucide-react';
+import { Image } from 'astro:assets';
+
+interface Props {
+  content: {
+    about?: {
+      title?: string;
+      description?: string;
+      mission?: string;
+      missionImage?: string;
+      values?: Array<{
+        title: string;
+        description: string;
+      }>;
+      team?: Array<{
+        name: string;
+        title: string;
+        bio: string;
+        image?: string;
+      }>;
+    };
+  };
+}
+
+const { content } = Astro.props;
+const about = content.about || {};
+const values = about.values || [
+  {
+    title: 'Transparency',
+    description:
+      "We believe in complete honesty with our clients about what works and what doesn't.",
+  },
+  {
+    title: 'Education',
+    description:
+      'We empower clients by teaching them about marketing rather than keeping them in the dark.',
+  },
+  {
+    title: 'Value',
+    description: 'We focus on delivering real, measurable results that justify your investment.',
+  },
+];
+
+// Map value titles to icons
+const valueIcons = {
+  Transparency: ShieldCheck,
+  Education: Users,
+  Value: Zap,
+  'Our Approach': Zap,
+  'Who We Serve': Users,
+  'Our Promise': ShieldCheck,
+};
 ---
 
 <section class="bg-white py-16 md:py-24">
   <div class="container mx-auto px-4">
     <div class="mb-16 text-center">
-      <h2 class="section-title text-gray-900">About Very Good Marketing</h2>
+      <h2 class="section-title text-gray-900">{about.title || 'About Very Good Marketing'}</h2>
       <p class="section-description text-gray-800">
-        Founded in 2022, we're on a mission to bring transparency and effectiveness to small
-        business marketing.
+        {
+          about.description ||
+            "Founded in 2022, we're on a mission to bring transparency and effectiveness to small business marketing."
+        }
       </p>
     </div>
 
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-      <div
-        class="rounded-lg bg-gray-50 p-8 text-center shadow-md transition-shadow hover:shadow-lg"
-      >
-        <div
-          class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100"
-        >
-          <Zap className="h-8 w-8 text-blue-600" />
-        </div>
-        <h3 class="mb-3 text-xl font-bold text-gray-900">Our Approach</h3>
-        <p class="text-gray-700">
-          We believe in clear communication, honest advice, and marketing strategies that actually
-          work for small businesses.
-        </p>
-      </div>
-
-      <div
-        class="rounded-lg bg-gray-50 p-8 text-center shadow-md transition-shadow hover:shadow-lg"
-      >
-        <div
-          class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100"
-        >
-          <Users className="h-8 w-8 text-blue-600" />
-        </div>
-        <h3 class="mb-3 text-xl font-bold text-gray-900">Who We Serve</h3>
-        <p class="text-gray-700">
-          We specialize in helping new and small service-based businesses that need effective
-          marketing without the big agency price tag.
-        </p>
-      </div>
-
-      <div
-        class="rounded-lg bg-gray-50 p-8 text-center shadow-md transition-shadow hover:shadow-lg"
-      >
-        <div
-          class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100"
-        >
-          <ShieldCheck className="h-8 w-8 text-blue-600" />
-        </div>
-        <h3 class="mb-3 text-xl font-bold text-gray-900">Our Promise</h3>
-        <p class="text-gray-700">
-          We promise complete transparency about what marketing can and cannot do for your business,
-          with no hidden fees or false promises.
-        </p>
-      </div>
+      {
+        values.map((value) => {
+          const IconComponent = valueIcons[value.title] || Zap;
+          return (
+            <div class="rounded-lg bg-gray-50 p-8 text-center shadow-md transition-shadow hover:shadow-lg">
+              <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                <IconComponent className="h-8 w-8 text-blue-600" />
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-gray-900">{value.title}</h3>
+              <p class="text-gray-700">{value.description}</p>
+            </div>
+          );
+        })
+      }
     </div>
+
+    {
+      about.team && about.team.length > 0 && (
+        <div class="mt-16">
+          <h2 class="mb-8 text-center text-2xl font-bold text-gray-900">Our Team</h2>
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {about.team.map((member) => (
+              <div class="flex flex-col items-center rounded-lg bg-gray-50 p-6 text-center shadow-md">
+                {member.image && (
+                  <div class="mb-4 h-32 w-32 overflow-hidden rounded-full">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={128}
+                      height={128}
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                )}
+                <h3 class="mb-1 text-xl font-bold text-gray-900">{member.name}</h3>
+                <p class="mb-4 text-blue-600">{member.title}</p>
+                <p class="text-gray-700">{member.bio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
   </div>
 </section>

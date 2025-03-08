@@ -3,7 +3,24 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui/card'
 import { Link } from '@/ui/link';
 import Icon from '@/components/ui/Icon.astro';
 
-const services = [
+interface Props {
+  content: {
+    services?: {
+      title?: string;
+      description?: string;
+      servicesList?: Array<{
+        title: string;
+        description: string;
+        icon?: string;
+        features?: string[];
+      }>;
+    };
+  };
+}
+
+const { content } = Astro.props;
+const servicesSection = content.services || {};
+const servicesList = servicesSection.servicesList || [
   {
     title: 'Website Creation',
     description: 'Professional, responsive websites designed specifically for small businesses.',
@@ -24,15 +41,23 @@ const services = [
     link: '/services#social-media',
   },
 ];
+
+// Create slugs for service links
+const services = servicesList.map((service) => ({
+  ...service,
+  link: `/services#${service.title.toLowerCase().replace(/\s+/g, '-')}`,
+}));
 ---
 
 <section class="bg-gray-50 py-16 md:py-24">
   <div class="container mx-auto px-4">
     <div class="mb-16 text-center">
-      <h2 class="section-title text-gray-900">Our Services</h2>
+      <h2 class="section-title text-gray-900">{servicesSection.title || 'Our Services'}</h2>
       <p class="section-description text-gray-800">
-        We offer transparent, effective marketing services designed specifically for small
-        businesses.
+        {
+          servicesSection.description ||
+            'We offer transparent, effective marketing services designed specifically for small businesses.'
+        }
       </p>
     </div>
 
@@ -42,7 +67,12 @@ const services = [
           <Card key={index} className="bg-white" client:load>
             <CardHeader>
               <div class="mb-4">
-                <Icon name={service.icon} color="#2563eb" class="h-10 w-10" client="load" />
+                <Icon
+                  name={service.icon || 'graph'}
+                  color="#2563eb"
+                  class="h-10 w-10"
+                  client="load"
+                />
               </div>
               <CardTitle className="text-xl text-gray-900" client:load>
                 {service.title}
@@ -50,6 +80,16 @@ const services = [
             </CardHeader>
             <CardContent>
               <p class="text-gray-800">{service.description}</p>
+              {service.features && service.features.length > 0 && (
+                <ul class="mt-4 space-y-2 text-sm text-gray-700">
+                  {service.features.slice(0, 2).map((feature) => (
+                    <li class="flex items-center">
+                      <Icon name="check" class="mr-2 h-4 w-4 text-green-600" client="load" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
             <CardFooter>
               <a

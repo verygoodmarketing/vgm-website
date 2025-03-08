@@ -2,7 +2,24 @@
 import { Card, CardContent } from '@/ui/card';
 import { Image } from 'astro:assets';
 
-const testimonials = [
+interface Props {
+  content: {
+    testimonials?: {
+      title?: string;
+      description?: string;
+      testimonialsList?: Array<{
+        quote: string;
+        author: string;
+        company?: string;
+        image?: string;
+      }>;
+    };
+  };
+}
+
+const { content } = Astro.props;
+const testimonialsSection = content.testimonials || {};
+const testimonials = testimonialsSection.testimonialsList || [
   {
     quote:
       'Very Good Marketing helped us establish our online presence with a beautiful website and effective Google Ads campaign. Their transparent approach was refreshing.',
@@ -30,9 +47,14 @@ const testimonials = [
 <section class="bg-white py-16 md:py-24">
   <div class="container mx-auto px-4">
     <div class="mb-16 text-center">
-      <h2 class="section-title text-gray-900">What Our Clients Say</h2>
+      <h2 class="section-title text-gray-900">
+        {testimonialsSection.title || 'What Our Clients Say'}
+      </h2>
       <p class="section-description text-gray-700">
-        Don't just take our word for it. Here's what our clients have to say about working with us.
+        {
+          testimonialsSection.description ||
+            "Don't just take our word for it. Here's what our clients have to say about working with us."
+        }
       </p>
     </div>
 
@@ -45,7 +67,7 @@ const testimonials = [
                 <div class="mr-4">
                   <Image
                     class="rounded-full"
-                    src={testimonial.image}
+                    src={testimonial.image || '/src/assets/images/placeholder.svg'}
                     alt={testimonial.author}
                     width={60}
                     height={60}
@@ -53,7 +75,9 @@ const testimonials = [
                 </div>
                 <div>
                   <h3 class="font-bold text-gray-900">{testimonial.author}</h3>
-                  <p class="text-sm text-gray-700">{testimonial.company}</p>
+                  {testimonial.company && (
+                    <p class="text-sm text-gray-700">{testimonial.company}</p>
+                  )}
                 </div>
               </div>
               <p class="text-gray-800 italic">"{testimonial.quote}"</p>

@@ -3,12 +3,41 @@ import { Image } from 'astro:assets';
 import { Card, CardContent } from '@/ui/card';
 import { Check } from 'lucide-react';
 import { Link } from '@/ui/link';
+
+interface Props {
+  content: {
+    hero?: {
+      title?: string;
+      highlightedText?: string;
+      description?: string;
+      primaryButtonText?: string;
+      primaryButtonUrl?: string;
+      secondaryButtonText?: string;
+      secondaryButtonUrl?: string;
+      backgroundImage?: string;
+      featureCard?: {
+        title?: string;
+        features?: string[];
+      };
+    };
+  };
+}
+
+const { content } = Astro.props;
+const hero = content.hero || {};
+const featureCard = hero.featureCard || {};
+const features = featureCard.features || [
+  'Founded in 2022 with a focus on transparency',
+  'Clear, upfront pricing with no hidden fees',
+  'Specialized in helping small service businesses',
+  'Educational approach to empower your decisions',
+];
 ---
 
 <section class="relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
   <div class="absolute inset-0 opacity-10">
     <Image
-      src="/src/assets/images/placeholder.svg"
+      src={hero.backgroundImage || '/src/assets/images/placeholder.svg'}
       alt="Background pattern"
       width={1920}
       height={1080}
@@ -20,17 +49,26 @@ import { Link } from '@/ui/link';
     <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div>
         <h1 class="mb-6 text-4xl leading-tight font-bold md:text-5xl lg:text-6xl">
-          Marketing with
-          <span class="text-amber-400">Complete Transparency</span>
+          {hero.title || 'Marketing with'}
+          <span class="text-amber-400">{hero.highlightedText || 'Complete Transparency'}</span>
         </h1>
         <p class="mb-8 text-xl text-white md:text-2xl">
-          Helping small businesses advertise cost-effectively without the usual marketing smoke and
-          mirrors.
+          {
+            hero.description ||
+              'Helping small businesses advertise cost-effectively without the usual marketing smoke and mirrors.'
+          }
         </p>
         <div class="flex flex-col gap-4 sm:flex-row">
-          <Link href="/services" variant="amber" size="lg" client:load> Explore Our Services </Link>
-          <Link href="/contact" variant="outlineDark" size="lg" client:load>
-            Free Consultation
+          <Link href={hero.primaryButtonUrl || '/services'} variant="amber" size="lg" client:load>
+            {hero.primaryButtonText || 'Explore Our Services'}
+          </Link>
+          <Link
+            href={hero.secondaryButtonUrl || '/contact'}
+            variant="outlineDark"
+            size="lg"
+            client:load
+          >
+            {hero.secondaryButtonText || 'Free Consultation'}
           </Link>
         </div>
       </div>
@@ -38,32 +76,20 @@ import { Link } from '@/ui/link';
       <div class="relative">
         <Card className="glass-effect" client:load>
           <CardContent className="p-6 md:p-8">
-            <h2 class="mb-4 text-2xl font-bold text-gray-900">Why Choose Us?</h2>
+            <h2 class="mb-4 text-2xl font-bold text-gray-900">
+              {featureCard.title || 'Why Choose Us?'}
+            </h2>
             <ul class="space-y-3">
-              <li class="flex items-start">
-                <div class="mt-1 mr-3 rounded-full bg-amber-500 p-1">
-                  <Check className="h-4 w-4 text-white" client:load />
-                </div>
-                <span class="text-gray-900">Founded in 2022 with a focus on transparency</span>
-              </li>
-              <li class="flex items-start">
-                <div class="mt-1 mr-3 rounded-full bg-amber-500 p-1">
-                  <Check className="h-4 w-4 text-white" client:load />
-                </div>
-                <span class="text-gray-900">Clear, upfront pricing with no hidden fees</span>
-              </li>
-              <li class="flex items-start">
-                <div class="mt-1 mr-3 rounded-full bg-amber-500 p-1">
-                  <Check className="h-4 w-4 text-white" client:load />
-                </div>
-                <span class="text-gray-900">Specialized in helping small service businesses</span>
-              </li>
-              <li class="flex items-start">
-                <div class="mt-1 mr-3 rounded-full bg-amber-500 p-1">
-                  <Check className="h-4 w-4 text-white" client:load />
-                </div>
-                <span class="text-gray-900">Educational approach to empower your decisions</span>
-              </li>
+              {
+                features.map((feature) => (
+                  <li class="flex items-start">
+                    <div class="mt-1 mr-3 rounded-full bg-amber-500 p-1">
+                      <Check className="h-4 w-4 text-white" client:load />
+                    </div>
+                    <span class="text-gray-900">{feature}</span>
+                  </li>
+                ))
+              }
             </ul>
           </CardContent>
         </Card>
