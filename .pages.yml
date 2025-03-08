@@ -16,3 +16,44 @@ content:
         label: 'Description'
         type: text
         required: true
+      - name: seo
+        label: SEO Settings
+        type: object
+        fields:
+          - {
+              name: ogImage,
+              label: Share Image,
+              type: string,
+              description: 'This is used as the page share image for SEO. If not provided, the default share image from the site configuration will be used.',
+            }
+          - {
+              name: ogType,
+              label: Share Type,
+              type: string,
+              description: 'This is used as the page share type for SEO. If not provided, the default share type from the site configuration will be used.',
+            }
+          - {
+              name: twitterCard,
+              label: Twitter Card,
+              type: string,
+              description: 'This is used as the page twitter card for SEO. If not provided, the default twitter card from the site configuration will be used.',
+            }
+          - {
+              name: description,
+              label: Description,
+              description: 'This is used as the page description for SEO. If not provided, the default description from the site configuration will be used.',
+              type: text,
+            }
+          - {
+              name: keywords,
+              label: Keywords,
+              description: 'This is used as the page keywords for SEO. If not provided, the default keywords from the site configuration will be used.',
+              type: array,
+              required: true,
+            }
+          - {
+              name: author,
+              label: Author,
+              description: 'This is used as the page author for SEO. If not provided, the default author from the site configuration will be used.',
+              type: string,
+            }
