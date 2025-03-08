@@ -4,10 +4,17 @@ import { Image } from 'astro:assets';
 interface Props {
   imgSrc?: string;
   imgAlt?: string;
+  content?: string;
 }
 
-const { imgSrc = '/src/assets/images/placeholder.svg', imgAlt = 'Our mission illustration' } =
-  Astro.props;
+const {
+  imgSrc = '/src/assets/images/placeholder.svg',
+  imgAlt = 'Our mission illustration',
+  content = 'Very Good Marketing Co. LLC was founded in 2024 with a clear mission: to help small businesses market themselves effectively without being swindled.',
+} = Astro.props;
+
+// Split content into paragraphs if it exists
+const paragraphs = content ? content.split('\n\n').filter((p) => p.trim()) : [];
 ---
 
 <section class="bg-white py-12 md:py-20">
@@ -15,19 +22,7 @@ const { imgSrc = '/src/assets/images/placeholder.svg', imgAlt = 'Our mission ill
     <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
       <div>
         <h2 class="mb-6 text-3xl font-bold">Our Mission</h2>
-        <p class="mb-6 text-lg">
-          Very Good Marketing Co. LLC was founded in 2024 with a clear mission: to help small
-          businesses market themselves effectively without being swindled.
-        </p>
-        <p class="mb-6 text-lg">
-          After seeing too many small businesses waste their limited resources on ineffective
-          marketing tactics or overpriced services, our founders decided to create a company that
-          prioritizes transparency, education, and results.
-        </p>
-        <p class="text-lg">
-          We believe that every business, regardless of size, deserves access to effective marketing
-          strategies and honest advice about what will truly help them grow.
-        </p>
+        {paragraphs.map((paragraph) => <p class="mb-6 text-lg">{paragraph}</p>)}
       </div>
       <div class="relative h-[400px] overflow-hidden rounded-lg shadow-xl">
         <Image

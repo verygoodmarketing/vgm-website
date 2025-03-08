@@ -33,12 +33,9 @@ const services = servicesList.map((service) => ({
 <section class="bg-gray-50 py-16 md:py-24">
   <div class="container mx-auto px-4">
     <div class="mb-16 text-center">
-      <h2 class="section-title text-gray-900">{servicesSection.title || 'Our Services'}</h2>
+      <h2 class="section-title text-gray-900">{servicesSection.title}</h2>
       <p class="section-description text-gray-800">
-        {
-          servicesSection.description ||
-            'We offer transparent, effective marketing services designed specifically for small businesses.'
-        }
+        {servicesSection.description}
       </p>
     </div>
 
@@ -61,9 +58,9 @@ const services = servicesList.map((service) => ({
             </CardHeader>
             <CardContent>
               <p class="text-gray-800">{service.description}</p>
-              {service.features && service.features.length > 0 && (
+              {service.features && (
                 <ul class="mt-4 space-y-2 text-sm text-gray-700">
-                  {service.features.slice(0, 2).map((feature) => (
+                  {service.features.map((feature) => (
                     <li class="flex items-center">
                       <Icon name="check" class="mr-2 h-4 w-4 text-green-600" client:load />
                       {feature}
@@ -86,7 +83,7 @@ const services = servicesList.map((service) => ({
     </div>
 
     <div class="mt-12 text-center">
-      <Link href="/services" variant="blue" client:load> View All Services </Link>
+      <Link href="/services" variant="blue" size="lg" client:load> View All Services </Link>
     </div>
   </div>
 </section>

@@ -16,33 +16,6 @@ if (!page) {
 
 const { Content } = await page.render();
 
-const values = [
-  {
-    title: 'Transparency',
-    description:
-      'We believe in complete honesty about what marketing can and cannot do for your business.',
-    icon: 'eye',
-  },
-  {
-    title: 'Education',
-    description:
-      'We empower our clients with knowledge so they can make informed decisions about their marketing.',
-    icon: 'book-open',
-  },
-  {
-    title: 'Affordability',
-    description:
-      'We provide cost-effective solutions tailored specifically for small business budgets.',
-    icon: 'piggy-bank',
-  },
-  {
-    title: 'Results',
-    description:
-      'We focus on delivering measurable outcomes that directly impact your business growth.',
-    icon: 'trending-up',
-  },
-];
-
 // Extract all SEO properties from the content entry
 const {
   title,
@@ -56,7 +29,26 @@ const {
   author,
   updatedDate,
   metadata,
+  // Extract section data
+  mission,
+  values,
+  founders,
+  pageHeader,
+  cta,
 } = page.data;
+
+// Default values for pageHeader and cta
+const defaultPageHeader = {
+  title: 'About Us',
+  description: 'Founded in 2024 to bring transparency to small business marketing.',
+};
+
+const defaultCta = {
+  title: 'Want to learn more about our approach?',
+  description: 'Schedule a call with our team to discuss how we can help your business.',
+  buttonText: 'Contact Us',
+  buttonLink: '/contact',
+};
 ---
 
 <MainLayout
@@ -71,20 +63,20 @@ const {
   {author}
 >
   <PageHeader
-    title="About Us"
-    description="Founded in 2024 to bring transparency to small business marketing."
+    title={pageHeader?.title || defaultPageHeader.title}
+    description={pageHeader?.description || defaultPageHeader.description}
   />
 
-  <Mission />
+  <Mission imgSrc={mission?.imgSrc} imgAlt={mission?.imgAlt} content={mission?.content} />
 
-  <Values />
+  <Values {values} />
 
-  <Founders />
+  <Founders {founders} />
 
   <CTA
-    title="Want to learn more about our approach?"
-    description="Schedule a call with our team to discuss how we can help your business."
-    buttonText="Contact Us"
-    buttonLink="/contact"
+    title={cta?.title || defaultCta.title}
+    description={cta?.description || defaultCta.description}
+    buttonText={cta?.buttonText || defaultCta.buttonText}
+    buttonLink={cta?.buttonUrl || defaultCta.buttonLink}
   />
 </MainLayout>

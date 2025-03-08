@@ -120,6 +120,35 @@ const articlesSectionSchema = z.object({
   categories: z.array(categorySchema).optional(),
 });
 
+// Define schema for mission section
+const missionSchema = z.object({
+  imgSrc: z.string().optional(),
+  imgAlt: z.string().optional(),
+  content: z.string().optional(),
+});
+
+// Define schema for value item
+const valueItemSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  icon: z.string().optional(),
+});
+
+// Define schema for founder item
+const founderItemSchema = z.object({
+  name: z.string(),
+  title: z.string(),
+  bio: z.string(),
+  imgSrc: z.string().optional(),
+  imgAlt: z.string().optional(),
+});
+
+// Define schema for page header
+const pageHeaderSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+});
+
 const pagesCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -154,6 +183,12 @@ const pagesCollection = defineCollection({
     testimonials: testimonialsSchema.optional(),
     cta: ctaSchema.optional(),
     articlesSection: articlesSectionSchema.optional(),
+
+    // About page specific sections
+    mission: missionSchema.optional(),
+    values: z.array(valueItemSchema).optional(),
+    founders: z.array(founderItemSchema).optional(),
+    pageHeader: pageHeaderSchema.optional(),
 
     // Global Settings
     siteName: z.string().optional(),

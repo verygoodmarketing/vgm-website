@@ -5,8 +5,8 @@ interface FounderItem {
   name: string;
   title: string;
   bio: string;
-  imgSrc: string;
-  imgAlt: string;
+  imgSrc?: string;
+  imgAlt?: string;
 }
 
 interface Props {
@@ -43,8 +43,8 @@ const { founders = defaultFounders } = Astro.props;
             <div class="relative h-[300px] overflow-hidden">
               <div class="h-full w-full">
                 <Image
-                  src={founder.imgSrc}
-                  alt={founder.imgAlt}
+                  src={founder.imgSrc || '/src/assets/images/placeholder.svg'}
+                  alt={founder.imgAlt || 'Team member'}
                   width={472}
                   height={300}
                   class="h-full w-full object-cover"

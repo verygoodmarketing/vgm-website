@@ -19,7 +19,7 @@ hero:
   primaryButtonUrl: '/services'
   secondaryButtonText: 'Free Consultation'
   secondaryButtonUrl: '/contact'
-  backgroundImage: '/src/assets/images/placeholder.svg'
+  backgroundImage: ''
   featureCard:
     title: 'Why Choose Us?'
     features:
@@ -29,7 +29,7 @@ hero:
       - 'Educational approach to empower your decisions'
 about:
   title: 'About Our Very Good Marketing'
-  description: 'Founded in 2022, we're on a mission to bring transparency and effectiveness to small business marketing.'
+  description: "Founded in 2022, we're on a mission to bring transparency and effectiveness to small business marketing."
   mission: 'To provide transparent, effective marketing solutions for small service businesses.'
   missionImage: '/src/assets/images/placeholder.svg'
   values:
@@ -37,6 +37,7 @@ about:
       description: 'We believe in clear communication, honest advice, and marketing strategies that actually work for small businesses.'
     - title: 'Who We Serve'
       description: 'We specialize in helping new and small service-based businesses that need effective marketing without the big agency price tag.'
+    - title: 'Our Promise'
       description: 'We promise complete transparency about what marketing can and cannot do for your business, with no hidden fees or false promises.'
 services:
   title: 'Our Services'
@@ -88,7 +89,3 @@ cta:
   buttonText: 'Get Started Today'
   buttonUrl: '/contact'
 ---
-
-# Home Page
-
-We are a forward-thinking company dedicated to delivering exceptional value to our customers. Our team brings years of experience and passion to every project we undertake.
