@@ -14,62 +14,7 @@ if (!page) {
 
 const { Content } = await page.render();
 
-const services = [
-  {
-    id: 'website-creation',
-    title: 'Website Creation',
-    description: 'Professional, responsive websites designed specifically for small businesses.',
-    icon: 'laptop',
-    features: [
-      '5-7 pages with responsive design',
-      'Hosting, domain, and maintenance included',
-      'Regular updates and support',
-      'Annual design refresh',
-    ],
-    pricing: {
-      upfront: 799,
-      recurring: 159,
-      recurringPeriod: 'month',
-    },
-  },
-  {
-    id: 'google-ads',
-    title: 'Google Search Ads Management',
-    description:
-      'Targeted search advertising to reach customers actively looking for your services.',
-    icon: 'search',
-    features: [
-      'Keyword research and optimization',
-      'Ad copy creation and testing',
-      'Performance tracking and reporting',
-      'Monthly strategy adjustments',
-    ],
-    pricing: {
-      upfront: 99,
-      recurring: 299,
-      recurringPeriod: 'month',
-    },
-  },
-  {
-    id: 'social-media',
-    title: 'Social Media Advertising',
-    description: 'Engage with your audience where they spend their time online.',
-    icon: 'share',
-    features: [
-      'Platform selection and strategy',
-      'Creative development',
-      'Audience targeting',
-      'Performance optimization',
-    ],
-    pricing: {
-      upfront: 99,
-      recurring: 599,
-      recurringPeriod: 'month',
-    },
-  },
-];
-
-// Extract all SEO properties from the content entry
+// Extract all properties from the content entry
 const {
   title,
   description,
@@ -83,7 +28,26 @@ const {
   features,
   updatedDate,
   metadata,
+  pageHeader,
+  services: contentServices,
+  pricingSection,
+  cta,
 } = page.data;
+
+// Create strongly-typed services data with defaults
+const services = Array.isArray(contentServices)
+  ? contentServices
+  : [
+      {
+        id: 'website-creation',
+        title: 'Website Creation',
+        description:
+          'Professional, responsive websites designed specifically for small businesses.',
+        icon: 'laptop',
+        features: ['5-7 pages with responsive design'],
+        pricing: { upfront: 799, recurring: 159, recurringPeriod: 'month' },
+      },
+    ];
 ---
 
 <MainLayout
@@ -98,32 +62,23 @@ const {
   {author}
 >
   <PageHeader
-    title="Our Services"
-    description="Transparent, effective marketing services designed specifically for small businesses."
+    title={pageHeader?.title || 'Our Services'}
+    description={pageHeader?.description || 'Effective marketing services for small businesses'}
   />
 
   <ServicesGrid {services} />
 
   <PricingSection
     {services}
-    serviceId="website-creation"
-    features={[
-      '5-7 responsive pages',
-      'Hosting and domain included',
-      'Regular maintenance and updates',
-      'Content management system',
-      'Mobile optimization',
-      'Basic SEO setup',
-      'Contact form integration',
-      'Google Analytics setup',
-      'Annual design refresh',
-    ]}
+    serviceId={pricingSection?.serviceId || 'website-creation'}
+    sectionTitle={pricingSection?.sectionTitle || 'Website Creation Pricing'}
+    features={pricingSection?.features || []}
   />
 
   <CTA
-    title="Ready to get started?"
-    description="Contact us today to discuss how our services can help your business grow."
-    buttonText="Contact Us"
-    buttonLink="/contact"
+    title={cta?.title || 'Ready to get started?'}
+    description={cta?.description || 'Contact us today.'}
+    buttonText={cta?.buttonText || 'Contact Us'}
+    buttonLink={cta?.buttonUrl || '/contact'}
   />
 </MainLayout>

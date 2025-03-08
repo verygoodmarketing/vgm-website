@@ -65,7 +65,7 @@ const aboutSchema = z.object({
   team: z.array(teamMemberSchema).optional(),
 });
 
-// Define schema for service items
+// Define schema for service items (for home page)
 const serviceSchema = z.object({
   title: z.string(),
   description: z.string(),
@@ -73,11 +73,36 @@ const serviceSchema = z.object({
   features: z.array(z.string()).optional(),
 });
 
-// Define schema for services section
+// Define schema for services section (for home page)
 const servicesSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
   servicesList: z.array(serviceSchema).optional(),
+});
+
+// Define schema for pricing in service
+const pricingSchema = z.object({
+  upfront: z.number(),
+  recurring: z.number(),
+  recurringPeriod: z.string(),
+  custom: z.string().optional(),
+});
+
+// Define schema for detailed service item (for services page)
+const detailedServiceSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  icon: z.string(),
+  features: z.array(z.string()),
+  pricing: pricingSchema,
+});
+
+// Define schema for pricing section
+const pricingSectionSchema = z.object({
+  serviceId: z.string(),
+  sectionTitle: z.string().optional(),
+  features: z.array(z.string()),
 });
 
 // Define schema for testimonial items
@@ -179,10 +204,13 @@ const pagesCollection = defineCollection({
     // Section content
     hero: heroSchema.optional(),
     about: aboutSchema.optional(),
-    services: servicesSchema.optional(),
+    services: z.union([servicesSchema, z.array(detailedServiceSchema)]).optional(),
     testimonials: testimonialsSchema.optional(),
     cta: ctaSchema.optional(),
     articlesSection: articlesSectionSchema.optional(),
+
+    // Services page specific
+    pricingSection: pricingSectionSchema.optional(),
 
     // About page specific sections
     mission: missionSchema.optional(),
